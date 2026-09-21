@@ -758,7 +758,7 @@ body{background:var(--paper);color:var(--ink);font-weight:450}
   .chapter-courses .chapter-title br{display:none}
   .chapter-courses .chapter-lead{margin-top:16px}
   .chapter-leader h2{font-size:clamp(32px,8.4vw,36px);white-space:nowrap}
-  .chapter-leader .spark-right .title-spark{right:-46px}
+  .chapter-leader .spark-right .title-spark{right:-62px}
   .chapter-leader .leader-name{margin-top:16px}
   .chapter-leader .chapter-lead{margin-top:16px}
   .chapter-leader .chapter-detail{margin-top:14px}
