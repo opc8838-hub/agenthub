@@ -1,9 +1,30 @@
 (() => {
   const dialogs = [...document.querySelectorAll('.modal-layer')];
   const page = document.querySelector('.page-shell');
+  const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+  const mobileTopicMenu = document.querySelector('.mobile-topic-menu');
+  const mobileCurrentTopic = document.querySelector('.mobile-current-topic');
+  const mobileTopicNames = {
+    'chapter-community': '社区介绍',
+    'chapter-programs': '长期计划',
+    'chapter-leader': '负责人',
+    'chapter-courses': '成长课程',
+    'chapter-social': '实战社群',
+    'chapter-products': '开发定制',
+    'chapter-consulting': '咨询服务'
+  };
   let active = null;
   let opener = null;
+  let mobileNavOpen = false;
   const focusable = 'button:not([disabled]), input, textarea, select, a[href], [tabindex="0"]';
+
+  function setMobileNav(open, restoreFocus = false) {
+    if (!mobileNavToggle || !mobileTopicMenu || mobileNavOpen === open) return;
+    mobileNavOpen = open;
+    mobileNavToggle.setAttribute('aria-expanded', String(open));
+    mobileTopicMenu.hidden = !open;
+    if (!open && restoreFocus) mobileNavToggle.focus({ preventScroll: true });
+  }
 
   function close() {
     if (!active) return;
@@ -28,8 +49,14 @@
   }
 
   document.addEventListener('click', event => {
+    const mobileToggle = event.target.closest('.mobile-nav-toggle');
+    if (mobileToggle) {
+      setMobileNav(!mobileNavOpen);
+      return;
+    }
     const scrollButton = event.target.closest('[data-scroll]');
     if (scrollButton) {
+      setMobileNav(false);
       close();
       const target = document.getElementById(scrollButton.dataset.scroll);
       if (target) {
@@ -44,13 +71,20 @@
     }
     const trigger = event.target.closest('[data-modal]');
     if (trigger) {
+      setMobileNav(false);
       open(trigger.dataset.modal, trigger);
       return;
     }
+    if (mobileNavOpen && !event.target.closest('.mobile-topic-menu')) setMobileNav(false);
     if (event.target.closest('.close') || event.target === active) close();
   });
 
   document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && mobileNavOpen) {
+      event.preventDefault();
+      setMobileNav(false, true);
+      return;
+    }
     if (!active) return;
     if (event.key === 'Escape') {
       event.preventDefault();
@@ -119,6 +153,10 @@
     document.querySelectorAll('.site-nav [data-scroll]').forEach(button => {
       button.setAttribute('aria-current', button.dataset.scroll === section.id ? 'true' : 'false');
     });
+    document.querySelectorAll('.mobile-topic-menu [data-scroll]').forEach(button => {
+      button.setAttribute('aria-current', button.dataset.scroll === section.id ? 'true' : 'false');
+    });
+    if (mobileCurrentTopic) mobileCurrentTopic.textContent = mobileTopicNames[section.id] || '社区介绍';
   }
 
   const observer = new IntersectionObserver(entries => {
@@ -136,4 +174,9 @@
     return !nearest || distance < nearest.distance ? { section, distance } : nearest;
   }, null)?.section;
   requestAnimationFrame(() => activateChapter(initialChapter || chapters[0]));
+  window.addEventListener('touchmove', () => setMobileNav(false), { passive: true });
+  window.addEventListener('wheel', () => setMobileNav(false), { passive: true });
+  matchMedia('(min-width: 601px)').addEventListener('change', event => {
+    if (event.matches) setMobileNav(false);
+  });
 })();

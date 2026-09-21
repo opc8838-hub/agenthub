@@ -11,7 +11,7 @@ with sync_playwright() as p:
     page = browser.new_page(viewport={'width': 1440, 'height': 1000}, device_scale_factor=1)
     errors = []
     page.on('pageerror', lambda error: errors.append(str(error)))
-    page.goto('http://127.0.0.1:4173/?v=26', wait_until='networkidle')
+    page.goto('http://127.0.0.1:4173/?v=27', wait_until='networkidle')
     page.emulate_media(reduced_motion='reduce')
     page.evaluate('document.fonts.ready')
     assert page.locator('.scene-image').first.evaluate('(img) => img.complete && img.naturalWidth > 0')
@@ -33,6 +33,11 @@ with sync_playwright() as p:
     assert page.locator('#courses-home-title br').count() == 1
     assert page.locator('#courses-home-title .course-accent').inner_text() == '成长'
     assert page.locator('.site-nav button').count() == 8
+    assert page.locator('.site-nav').is_visible()
+    assert page.locator('.mobile-nav-toggle').count() == 1
+    assert page.locator('.mobile-nav-toggle').is_hidden()
+    assert page.locator('.mobile-topic-menu button').count() == 8
+    assert page.locator('.mobile-topic-menu').is_hidden()
     assert abs(page.locator('.nav-inner').bounding_box()['width'] - 1320) < 1
     assert page.locator('.nav-inner').bounding_box()['width'] < page.locator('.chapter-inner').first.bounding_box()['width']
     assert page.locator('.site-nav [data-scroll="chapter-leader"]').inner_text() == '负责人'
@@ -99,10 +104,47 @@ with sync_playwright() as p:
     for width in [390, 375, 320, 768, 1024]:
         page.set_viewport_size({'width': width, 'height': 844})
         page.evaluate('scrollTo(0,0)')
+        page.wait_for_timeout(120)
         assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'), f'Overflow at {width}'
         if width == 390:
             page.screenshot(path=str(OUTPUT / 'mobile-full.png'), full_page=True)
             page.screenshot(path=str(OUTPUT / 'mobile-first-screen.png'))
+            assert page.locator('.site-nav').is_hidden()
+            assert page.locator('.mobile-nav-toggle').is_visible()
+            assert page.locator('.mobile-current-topic').inner_text() == '社区介绍'
+            title_y = page.locator('#chapter-community .chapter-title').bounding_box()['y']
+            page.locator('.mobile-nav-toggle').click()
+            mobile_menu = page.locator('.mobile-topic-menu')
+            assert mobile_menu.is_visible()
+            assert page.locator('.mobile-nav-toggle').get_attribute('aria-expanded') == 'true'
+            assert mobile_menu.bounding_box()['height'] <= 140
+            assert all(button.is_visible() for button in mobile_menu.locator('button').all())
+            assert abs(page.locator('#chapter-community .chapter-title').bounding_box()['y'] - title_y) < 1
+            assert mobile_menu.locator('[data-scroll="chapter-community"]').get_attribute('aria-current') == 'true'
+            page.screenshot(path=str(OUTPUT / 'mobile-nav-open.png'))
+            page.keyboard.press('Escape')
+            assert mobile_menu.is_hidden()
+            assert page.locator('.mobile-nav-toggle').get_attribute('aria-expanded') == 'false'
+            assert page.locator('.mobile-nav-toggle').evaluate('(button) => button === document.activeElement')
+            page.locator('.mobile-nav-toggle').click()
+            mobile_menu.locator('[data-scroll="chapter-courses"]').click()
+            page.wait_for_timeout(120)
+            assert mobile_menu.is_hidden()
+            assert page.locator('.mobile-current-topic').inner_text() == '成长课程'
+            assert page.locator('.mobile-topic-menu [data-scroll="chapter-courses"]').get_attribute('aria-current') == 'true'
+            page.locator('.mobile-nav-toggle').click()
+            page.mouse.click(4, 300)
+            assert mobile_menu.is_hidden()
+            page.locator('.mobile-nav-toggle').click()
+            page.dispatch_event('body', 'touchmove')
+            page.wait_for_timeout(80)
+            assert mobile_menu.is_hidden()
+            page.locator('.mobile-nav-toggle').click()
+            assert mobile_menu.is_visible()
+            mobile_menu.locator('[data-modal="contact"]').click()
+            assert mobile_menu.is_hidden()
+            assert page.locator('#contact').is_visible()
+            page.keyboard.press('Escape')
             page.locator('.page-shell [data-modal="products"]').click()
             assert page.locator('#products').is_visible()
             assert page.locator('#products .modal').evaluate('(el) => el.scrollHeight > el.clientHeight')
@@ -110,7 +152,7 @@ with sync_playwright() as p:
             page.keyboard.press('Escape')
     assert not errors, errors
     motion_page = browser.new_page(viewport={'width': 1440, 'height': 1000})
-    motion_page.goto('http://127.0.0.1:4173/?v=26', wait_until='networkidle')
+    motion_page.goto('http://127.0.0.1:4173/?v=27', wait_until='networkidle')
     motion_page.locator('.site-nav [data-scroll="chapter-programs"]').hover()
     assert motion_page.locator('.site-nav [data-scroll="chapter-programs"]').evaluate(
         '(el) => getComputedStyle(el, "::after").animationName === "doodle-line-nudge"'
@@ -129,7 +171,7 @@ with sync_playwright() as p:
     assert len(set(samples)) > 1, samples
     motion_page.close()
     mobile_motion_page = browser.new_page(viewport={'width': 390, 'height': 844}, is_mobile=True, has_touch=True)
-    mobile_motion_page.goto('http://127.0.0.1:4173/?v=26', wait_until='networkidle')
+    mobile_motion_page.goto('http://127.0.0.1:4173/?v=27', wait_until='networkidle')
     mobile_arrow = mobile_motion_page.locator('.chapter-community .chapter-action .icon')
     mobile_samples = []
     for _ in range(5):
@@ -147,5 +189,5 @@ with sync_playwright() as p:
     )
     mobile_motion_page.close()
     browser.close()
-    print('PASS: 7 code-built topics, centered compact navigation, 7 generated scene layers, readable typography, 8 dialogs, navigation scrolling, keyboard controls, desktop and mobile motion, reduced-motion fallback, no external navigation, 5 responsive widths, no JS errors.')
+    print('PASS: 7 code-built topics, compact two-row mobile navigation, 7 generated scene layers, readable typography, 8 dialogs, navigation scrolling, keyboard controls, desktop and mobile motion, reduced-motion fallback, no external navigation, 5 responsive widths, no JS errors.')
     print('Previews: ' + str(OUTPUT))
