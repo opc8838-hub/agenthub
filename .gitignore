@@ -1,0 +1,16 @@
+preview/
+reference-video/
+.vercel/
+.impeccable.md
+__pycache__/
+*.pyc
+
+# Superseded visual explorations; production uses the scene-v4/v5 assets.
+assets/theme-*.png
+assets/products-scene-v4.png
+assets/community-hero-v3.png
+assets/t-agent.jpg
+assets/t-agent-cutout.png
+assets/t-agent-ip-profile.yaml
+assets/NotoSansSC-source.ttf
+assets/Inter.ttf
