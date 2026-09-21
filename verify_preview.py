@@ -11,7 +11,7 @@ with sync_playwright() as p:
     page = browser.new_page(viewport={'width': 1440, 'height': 1000}, device_scale_factor=1)
     errors = []
     page.on('pageerror', lambda error: errors.append(str(error)))
-    page.goto('http://127.0.0.1:4173/?v=25', wait_until='networkidle')
+    page.goto('http://127.0.0.1:4173/?v=26', wait_until='networkidle')
     page.emulate_media(reduced_motion='reduce')
     page.evaluate('document.fonts.ready')
     assert page.locator('.scene-image').first.evaluate('(img) => img.complete && img.naturalWidth > 0')
@@ -110,7 +110,7 @@ with sync_playwright() as p:
             page.keyboard.press('Escape')
     assert not errors, errors
     motion_page = browser.new_page(viewport={'width': 1440, 'height': 1000})
-    motion_page.goto('http://127.0.0.1:4173/?v=25', wait_until='networkidle')
+    motion_page.goto('http://127.0.0.1:4173/?v=26', wait_until='networkidle')
     motion_page.locator('.site-nav [data-scroll="chapter-programs"]').hover()
     assert motion_page.locator('.site-nav [data-scroll="chapter-programs"]').evaluate(
         '(el) => getComputedStyle(el, "::after").animationName === "doodle-line-nudge"'
@@ -129,7 +129,7 @@ with sync_playwright() as p:
     assert len(set(samples)) > 1, samples
     motion_page.close()
     mobile_motion_page = browser.new_page(viewport={'width': 390, 'height': 844}, is_mobile=True, has_touch=True)
-    mobile_motion_page.goto('http://127.0.0.1:4173/?v=25', wait_until='networkidle')
+    mobile_motion_page.goto('http://127.0.0.1:4173/?v=26', wait_until='networkidle')
     mobile_arrow = mobile_motion_page.locator('.chapter-community .chapter-action .icon')
     mobile_samples = []
     for _ in range(5):

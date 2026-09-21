@@ -663,7 +663,19 @@ body{background:var(--paper);color:var(--ink);font-weight:450}
   .doodle-spark-stroke{stroke-width:9}
   .spark-left .title-spark{left:-34px}
   .spark-right .title-spark{right:-52px}
-  .chapter-leader h2{font-size:clamp(36px,9.7vw,50px)}
+  .chapter-programs .chapter-lead{line-height:1.7}
+  .chapter-programs .chapter-lead br{display:block}
+  .chapter-programs .chapter-lead .blue-text{line-height:1.2}
+  .chapter-courses h2{font-size:clamp(35px,9.5vw,44px);white-space:nowrap}
+  .chapter-courses .chapter-title br{display:none}
+  .chapter-courses .chapter-lead{margin-top:16px}
+  .chapter-leader h2{font-size:clamp(32px,8.4vw,36px);white-space:nowrap}
+  .chapter-leader .spark-right .title-spark{right:-38px}
+  .chapter-leader .leader-name{margin-top:16px}
+  .chapter-leader .chapter-lead{margin-top:16px}
+  .chapter-leader .chapter-detail{margin-top:14px}
+  .chapter-leader .chapter-action{margin-top:20px}
+  .chapter-consulting .spark-right .title-spark{right:-40px}
 }
 
 /* V10 — concentrated chapter composition and scroll-led motion. */
