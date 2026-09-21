@@ -671,6 +671,7 @@ body{background:var(--paper);color:var(--ink);font-weight:450}
     flex:0 0 28px;
     overflow:visible;
     filter:url(#chevron-boil);
+    animation:chevron-nudge .32s steps(1,end) infinite;
   }
   .mobile-nav-chevron-up{display:none}
   .mobile-nav-toggle[aria-expanded="true"] .mobile-nav-chevron-down{display:none}
@@ -828,6 +829,7 @@ body{background:var(--paper);color:var(--ink);font-weight:450}
 @keyframes type-char-in{from{opacity:0}to{opacity:1}}
 @keyframes spark-breathe{0%,100%{opacity:.82;scale:1}50%{opacity:1;scale:1.08}}
 @keyframes doodle-nudge{0%,100%{translate:0 0}25%{translate:1.25px -1.1px}50%{translate:-1.1px .95px}75%{translate:.8px 1.15px}}
+@keyframes chevron-nudge{0%,100%{translate:0 0}25%{translate:1.7px -1.45px}50%{translate:-1.55px 1.3px}75%{translate:1.25px 1.55px}}
 @keyframes doodle-line-nudge{0%,100%{translate:0 0}25%{translate:1px -.9px}50%{translate:-.85px .75px}75%{translate:.7px .9px}}
 @keyframes scene-breathe{
   0%,100%{transform:translateX(var(--scene-shift)) translateY(var(--scene-lift)) scale(1)}

@@ -11,7 +11,7 @@ with sync_playwright() as p:
     page = browser.new_page(viewport={'width': 1440, 'height': 1000}, device_scale_factor=1)
     errors = []
     page.on('pageerror', lambda error: errors.append(str(error)))
-    page.goto('http://127.0.0.1:4173/?v=29', wait_until='networkidle')
+    page.goto('http://127.0.0.1:4173/?v=30', wait_until='networkidle')
     page.emulate_media(reduced_motion='reduce')
     page.evaluate('document.fonts.ready')
     assert page.locator('.scene-image').first.evaluate('(img) => img.complete && img.naturalWidth > 0')
@@ -116,6 +116,9 @@ with sync_playwright() as p:
             assert page.locator('.mobile-nav-toggle').is_visible()
             assert page.locator('.mobile-nav-chevron-down').is_visible()
             assert page.locator('.mobile-nav-chevron-up').is_hidden()
+            assert page.locator('.mobile-nav-chevron-down').evaluate(
+                '(el) => getComputedStyle(el).animationName === "none" && getComputedStyle(el).filter === "none"'
+            )
             assert page.locator('.mobile-current-topic').inner_text() == '社区介绍'
             title_y = page.locator('#chapter-community .chapter-title').bounding_box()['y']
             page.locator('.mobile-nav-toggle').click()
@@ -168,7 +171,7 @@ with sync_playwright() as p:
             page.screenshot(path=str(OUTPUT / 'mobile-leader.png'))
     assert not errors, errors
     motion_page = browser.new_page(viewport={'width': 1440, 'height': 1000})
-    motion_page.goto('http://127.0.0.1:4173/?v=29', wait_until='networkidle')
+    motion_page.goto('http://127.0.0.1:4173/?v=30', wait_until='networkidle')
     motion_page.locator('.site-nav [data-scroll="chapter-programs"]').hover()
     assert motion_page.locator('.site-nav [data-scroll="chapter-programs"]').evaluate(
         '(el) => getComputedStyle(el, "::after").animationName === "doodle-line-nudge"'
@@ -187,14 +190,21 @@ with sync_playwright() as p:
     assert len(set(samples)) > 1, samples
     motion_page.close()
     mobile_motion_page = browser.new_page(viewport={'width': 390, 'height': 844}, is_mobile=True, has_touch=True)
-    mobile_motion_page.goto('http://127.0.0.1:4173/?v=29', wait_until='networkidle')
+    mobile_motion_page.goto('http://127.0.0.1:4173/?v=30', wait_until='networkidle')
     assert mobile_motion_page.locator('.mobile-nav-chevron-down').is_visible()
     assert mobile_motion_page.locator('.mobile-nav-chevron-down').evaluate(
-        '(el) => getComputedStyle(el).filter !== "none"'
+        '(el) => getComputedStyle(el).filter !== "none" && getComputedStyle(el).animationName === "chevron-nudge"'
     )
     assert mobile_motion_page.locator('#i-chevron-down .doodle-chevron-stroke').evaluate(
         '(el) => getComputedStyle(el).animationName === "chevron-draw"'
     )
+    chevron_samples = []
+    for _ in range(6):
+        chevron_samples.append(mobile_motion_page.locator('.mobile-nav-chevron-down').evaluate(
+            '(el) => getComputedStyle(el).translate'
+        ))
+        mobile_motion_page.wait_for_timeout(80)
+    assert len(set(chevron_samples)) >= 3, chevron_samples
     mobile_motion_page.locator('.mobile-nav-toggle').click()
     assert mobile_motion_page.locator('.mobile-nav-chevron-down').is_hidden()
     assert mobile_motion_page.locator('.mobile-nav-chevron-up').is_visible()
