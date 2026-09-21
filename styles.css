@@ -657,10 +657,13 @@ body{background:var(--paper);color:var(--ink);font-weight:450}
   .service-grid span:nth-child(2n){border-right:0}
   .service-grid .icon{width:27px;height:27px}
   .scene-art{width:100%}
+  .chapter-copy{width:calc(100% - 12px);translate:12px 0}
+  .chapter-title-wrap.spark-left{margin-left:16px}
   .title-spark{top:-28px;width:50px;height:46px}
   .doodle-spark-stroke{stroke-width:9}
-  .spark-left .title-spark{left:-14px}
-  .spark-right .title-spark{right:-30px}
+  .spark-left .title-spark{left:-34px}
+  .spark-right .title-spark{right:-52px}
+  .chapter-leader h2{font-size:clamp(36px,9.7vw,50px)}
 }
 
 /* V10 — concentrated chapter composition and scroll-led motion. */
