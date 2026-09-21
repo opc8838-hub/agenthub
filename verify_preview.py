@@ -11,7 +11,7 @@ with sync_playwright() as p:
     page = browser.new_page(viewport={'width': 1440, 'height': 1000}, device_scale_factor=1)
     errors = []
     page.on('pageerror', lambda error: errors.append(str(error)))
-    page.goto('http://127.0.0.1:4173/?v=27', wait_until='networkidle')
+    page.goto('http://127.0.0.1:4173/?v=28', wait_until='networkidle')
     page.emulate_media(reduced_motion='reduce')
     page.evaluate('document.fonts.ready')
     assert page.locator('.scene-image').first.evaluate('(img) => img.complete && img.naturalWidth > 0')
@@ -21,9 +21,12 @@ with sync_playwright() as p:
     assert page.locator('.chapter-title-wrap.spark-left').count() == 4
     assert page.locator('.chapter-title-wrap.spark-right').count() == 3
     assert page.locator('#i-doodle-spark').count() == 1
+    assert page.locator('#i-chevron-up').count() == 1
+    assert page.locator('#i-chevron-down').count() == 1
     assert page.locator('#i-chip').count() == 1
     assert page.locator('.brand-chip use[href="#i-chip"]').count() == 1
     assert page.locator('#doodle-boil').count() == 1
+    assert page.locator('#chevron-boil').count() == 1
     assert page.locator('text=。').count() == 0
     scene_sources = page.locator('.scene-image').evaluate_all('(images) => images.map((img) => img.src)')
     assert sum('-scene-v4.png' in src for src in scene_sources) == 6
@@ -111,12 +114,16 @@ with sync_playwright() as p:
             page.screenshot(path=str(OUTPUT / 'mobile-first-screen.png'))
             assert page.locator('.site-nav').is_hidden()
             assert page.locator('.mobile-nav-toggle').is_visible()
+            assert page.locator('.mobile-nav-chevron-down').is_visible()
+            assert page.locator('.mobile-nav-chevron-up').is_hidden()
             assert page.locator('.mobile-current-topic').inner_text() == '社区介绍'
             title_y = page.locator('#chapter-community .chapter-title').bounding_box()['y']
             page.locator('.mobile-nav-toggle').click()
             mobile_menu = page.locator('.mobile-topic-menu')
             assert mobile_menu.is_visible()
             assert page.locator('.mobile-nav-toggle').get_attribute('aria-expanded') == 'true'
+            assert page.locator('.mobile-nav-chevron-down').is_hidden()
+            assert page.locator('.mobile-nav-chevron-up').is_visible()
             assert mobile_menu.bounding_box()['height'] <= 140
             assert all(button.is_visible() for button in mobile_menu.locator('button').all())
             assert abs(page.locator('#chapter-community .chapter-title').bounding_box()['y'] - title_y) < 1
@@ -125,6 +132,8 @@ with sync_playwright() as p:
             page.keyboard.press('Escape')
             assert mobile_menu.is_hidden()
             assert page.locator('.mobile-nav-toggle').get_attribute('aria-expanded') == 'false'
+            assert page.locator('.mobile-nav-chevron-down').is_visible()
+            assert page.locator('.mobile-nav-chevron-up').is_hidden()
             assert page.locator('.mobile-nav-toggle').evaluate('(button) => button === document.activeElement')
             page.locator('.mobile-nav-toggle').click()
             mobile_menu.locator('[data-scroll="chapter-courses"]').click()
@@ -150,9 +159,16 @@ with sync_playwright() as p:
             assert page.locator('#products .modal').evaluate('(el) => el.scrollHeight > el.clientHeight')
             page.screenshot(path=str(OUTPUT / 'mobile-products.png'), animations='disabled')
             page.keyboard.press('Escape')
+            page.locator('#chapter-leader').scroll_into_view_if_needed()
+            page.wait_for_timeout(120)
+            leader_title_box = page.locator('#leader-home-title').bounding_box()
+            leader_spark_box = page.locator('.chapter-leader .title-spark').bounding_box()
+            assert leader_spark_box['x'] >= leader_title_box['x'] + leader_title_box['width'] - 6
+            assert leader_spark_box['x'] + leader_spark_box['width'] <= width
+            page.screenshot(path=str(OUTPUT / 'mobile-leader.png'))
     assert not errors, errors
     motion_page = browser.new_page(viewport={'width': 1440, 'height': 1000})
-    motion_page.goto('http://127.0.0.1:4173/?v=27', wait_until='networkidle')
+    motion_page.goto('http://127.0.0.1:4173/?v=28', wait_until='networkidle')
     motion_page.locator('.site-nav [data-scroll="chapter-programs"]').hover()
     assert motion_page.locator('.site-nav [data-scroll="chapter-programs"]').evaluate(
         '(el) => getComputedStyle(el, "::after").animationName === "doodle-line-nudge"'
@@ -171,7 +187,18 @@ with sync_playwright() as p:
     assert len(set(samples)) > 1, samples
     motion_page.close()
     mobile_motion_page = browser.new_page(viewport={'width': 390, 'height': 844}, is_mobile=True, has_touch=True)
-    mobile_motion_page.goto('http://127.0.0.1:4173/?v=27', wait_until='networkidle')
+    mobile_motion_page.goto('http://127.0.0.1:4173/?v=28', wait_until='networkidle')
+    assert mobile_motion_page.locator('.mobile-nav-chevron-down').is_visible()
+    assert mobile_motion_page.locator('.mobile-nav-chevron-down').evaluate(
+        '(el) => getComputedStyle(el).filter !== "none"'
+    )
+    assert mobile_motion_page.locator('#i-chevron-down .doodle-chevron-stroke').evaluate(
+        '(el) => getComputedStyle(el).animationName === "chevron-draw"'
+    )
+    mobile_motion_page.locator('.mobile-nav-toggle').click()
+    assert mobile_motion_page.locator('.mobile-nav-chevron-down').is_hidden()
+    assert mobile_motion_page.locator('.mobile-nav-chevron-up').is_visible()
+    mobile_motion_page.locator('.mobile-nav-toggle').click()
     mobile_arrow = mobile_motion_page.locator('.chapter-community .chapter-action .icon')
     mobile_samples = []
     for _ in range(5):
