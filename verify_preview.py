@@ -5,6 +5,21 @@ from playwright.sync_api import sync_playwright
 ROOT = Path(__file__).resolve().parent
 OUTPUT = ROOT / 'preview'
 OUTPUT.mkdir(exist_ok=True)
+CLOSE_ASSET = ROOT / 'assets' / 'close-animated.svg'
+COMMUNITY_IMAGE_ASSETS = [
+    ROOT / 'assets' / 'community-trae-friends.png',
+    ROOT / 'assets' / 'community-agi-meetup.png',
+]
+COMMUNITY_QR_ASSET = ROOT / 'assets' / 'community-wechat-qr-green.jpg'
+assert CLOSE_ASSET.exists()
+assert all(asset.exists() for asset in COMMUNITY_IMAGE_ASSETS)
+assert COMMUNITY_QR_ASSET.exists()
+close_svg = CLOSE_ASSET.read_text(encoding='utf-8')
+assert 'stroke: #2b2a33' in close_svg
+assert 'baseFrequency="0.055"' in close_svg
+assert 'scale="4"' in close_svg
+assert 'dur="0.64s"' in close_svg
+assert 'animation:draw 0.70s' in close_svg
 
 with sync_playwright() as p:
     browser = p.chromium.launch()
@@ -24,6 +39,19 @@ with sync_playwright() as p:
     assert page.locator('#i-chevron-up').count() == 1
     assert page.locator('#i-chevron-down').count() == 1
     assert page.locator('#i-chip').count() == 1
+    assert page.locator('.modal-layer').count() == 9
+    assert page.locator('.close').count() == 9
+    assert all(header.evaluate(
+        '(el) => getComputedStyle(el).borderBottomWidth === "0px"'
+    ) for header in page.locator('.modal-top').all())
+    english_modal_kickers = page.locator(
+        '#plans .modal-kicker, #courses .modal-kicker, '
+        '#community .modal-kicker, #products .modal-kicker, '
+        '#consulting .modal-kicker, #contact .modal-kicker'
+    )
+    assert page.locator('#intro .modal-kicker').count() == 0
+    assert english_modal_kickers.count() == 5
+    assert all(not kicker.is_visible() for kicker in english_modal_kickers.all())
     assert page.locator('.brand-chip use[href="#i-chip"]').count() == 1
     assert page.locator('#doodle-boil').count() == 1
     assert page.locator('#chevron-boil').count() == 1
@@ -82,9 +110,79 @@ with sync_playwright() as p:
         trigger.click()
         dialog = page.locator('#' + topic)
         assert dialog.is_visible(), topic
+        modal = dialog.locator('.modal')
+        assert float(modal.evaluate('(el) => parseFloat(getComputedStyle(el).borderRadius)')) >= 20
+        assert modal.evaluate('(el) => getComputedStyle(el).backgroundImage === "none"')
+        close_button = dialog.locator('.close')
+        assert close_button.evaluate('(el) => getComputedStyle(el).backgroundImage === "none"')
+        assert close_button.locator('.icon').evaluate('(el) => getComputedStyle(el).opacity === "1"')
+        for button in dialog.locator('.inside-button').all():
+            if topic == 'community':
+                assert button.evaluate('(el) => getComputedStyle(el).backgroundColor === "rgba(0, 0, 0, 0)"')
+                assert button.evaluate('(el) => getComputedStyle(el).color === "rgb(23, 100, 245)"')
+            else:
+                assert button.evaluate('(el) => getComputedStyle(el).backgroundColor === "rgb(23, 100, 245)"')
+            assert float(button.evaluate('(el) => parseFloat(getComputedStyle(el).borderRadius)')) >= 20
+        if topic == 'intro':
+            intro_title = dialog.locator('#intro-title')
+            assert 'modal-top' in intro_title.evaluate('(el) => el.parentElement.className')
+            assert intro_title.evaluate('(el) => getComputedStyle(el).translate === "8px 14px"')
+            assert abs(modal.bounding_box()['width'] - 1100) < 1
+            assert dialog.locator('.modal-intro').bounding_box()['y'] - modal.bounding_box()['y'] < 170
+            assert dialog.locator('.modal-top').evaluate(
+                '(el) => getComputedStyle(el).borderBottomWidth === "0px"'
+            )
+            gallery_images = dialog.locator('.community-gallery img')
+            assert gallery_images.count() == 2
+            for image in gallery_images.all():
+                image.evaluate('(img) => img.decode()')
+                assert image.evaluate('(img) => img.complete && img.naturalWidth > 0')
+                assert image.get_attribute('alt')
+                assert float(image.evaluate('(el) => parseFloat(getComputedStyle(el).borderRadius)')) >= 20
+            image_boxes = [image.bounding_box() for image in gallery_images.all()]
+            assert image_boxes[0]['x'] < image_boxes[1]['x']
+            assert all(box['width'] / box['height'] >= 1.7 for box in image_boxes)
+            gallery_box = dialog.locator('.community-gallery').bounding_box()
+            body_box = dialog.locator('.community-modal-body').bounding_box()
+            assert gallery_box['width'] >= body_box['width'] * .9
+            assert abs((gallery_box['x'] - body_box['x']) - (
+                body_box['x'] + body_box['width'] - gallery_box['x'] - gallery_box['width']
+            )) < 2
+            assert dialog.locator('.community-purpose').bounding_box()['y'] < image_boxes[0]['y']
+            assert dialog.locator('.community-metric').all_inner_texts() == ['2000+', '40+']
+            assert all(metric.evaluate(
+                '(el) => getComputedStyle(el).color === "rgb(23, 100, 245)"'
+            ) for metric in dialog.locator('.community-metric').all())
+            page.screenshot(path=str(OUTPUT / 'intro-modal.png'), animations='disabled')
         if topic == 'leader':
             dialog.locator('.profile-portrait').evaluate('(img) => img.decode()')
             page.screenshot(path=str(OUTPUT / 'leader-modal.png'), animations='disabled')
+        if topic == 'community':
+            assert dialog.locator('.modal-kicker').count() == 0
+            counts = dialog.locator('.community-category-list strong').all_inner_texts()
+            assert len(counts) == 9
+            assert sum(int(''.join(character for character in value if character.isdigit())) for value in counts) == 28
+            assert counts == ['10 个', '4 个', '3 个', '3 个', '1 个', '1 个', '2 个', '3 个', '1 个']
+            assert dialog.locator('.community-category-icon').count() == 9
+            assert dialog.locator('.community-category-track').count() == 0
+            assert dialog.locator('.community-summary-card strong').all_inner_texts() == ['28', '9']
+            assert dialog.locator('.community-price strong').inner_text() == '¥99'
+            assert dialog.locator('.community-price del').inner_text() == '原价 ¥199'
+            qr = dialog.locator('.community-qr img')
+            qr.evaluate('(img) => img.decode()')
+            assert qr.evaluate('(img) => img.complete && img.naturalWidth === 651 && img.naturalHeight === 642')
+            assert qr.get_attribute('src') == 'assets/community-wechat-qr-green.jpg'
+            assert dialog.locator('img').count() == 1
+            assert '非支付码' in qr.get_attribute('alt')
+            assert '社群服务' in dialog.inner_text()
+            assert '近 2000 个' in dialog.inner_text()
+            assert '实用工具库' in dialog.inner_text()
+            assert '已逐项扫描本地开源技能与工具目录' not in dialog.inner_text()
+            assert '标记为“原创”' not in dialog.inner_text()
+            assert '这是黎健堂的微信二维码' not in dialog.inner_text()
+            assert close_button.evaluate('(el) => getComputedStyle(el).outlineStyle === "none"')
+            assert modal.evaluate('(el) => el.scrollHeight <= el.clientHeight + 1')
+            page.screenshot(path=str(OUTPUT / 'community-modal.png'), animations='disabled')
         assert page.evaluate('document.querySelector(".page-shell").inert')
         page.keyboard.press('Shift+Tab')
         assert dialog.evaluate('(d) => d.contains(document.activeElement)')
@@ -157,9 +255,30 @@ with sync_playwright() as p:
             assert mobile_menu.is_hidden()
             assert page.locator('#contact').is_visible()
             page.keyboard.press('Escape')
+            page.locator('.page-shell [data-modal="intro"]').click()
+            mobile_gallery_images = page.locator('#intro .community-gallery img')
+            assert mobile_gallery_images.count() == 2
+            mobile_image_boxes = [image.bounding_box() for image in mobile_gallery_images.all()]
+            assert mobile_image_boxes[0]['y'] < mobile_image_boxes[1]['y']
+            assert all(box['width'] < width for box in mobile_image_boxes)
+            assert all(box['width'] / box['height'] >= 1.7 for box in mobile_image_boxes)
+            page.screenshot(path=str(OUTPUT / 'mobile-intro.png'), animations='disabled')
+            page.keyboard.press('Escape')
+            page.locator('.page-shell [data-modal="community"]').click()
+            mobile_community = page.locator('#community')
+            assert mobile_community.is_visible()
+            assert mobile_community.locator('.community-category-list').evaluate(
+                '(el) => getComputedStyle(el).gridTemplateColumns.split(" ").length === 1'
+            )
+            assert mobile_community.locator('.community-qr img').bounding_box()['width'] <= 240
+            assert page.evaluate('document.documentElement.scrollWidth <= innerWidth')
+            page.screenshot(path=str(OUTPUT / 'mobile-community.png'), animations='disabled')
+            page.keyboard.press('Escape')
             page.locator('.page-shell [data-modal="products"]').click()
             assert page.locator('#products').is_visible()
             assert page.locator('#products .modal').evaluate('(el) => el.scrollHeight > el.clientHeight')
+            assert float(page.locator('#products .modal').evaluate('(el) => parseFloat(getComputedStyle(el).borderRadius)')) >= 18
+            assert page.locator('#products .modal').bounding_box()['width'] < width
             page.screenshot(path=str(OUTPUT / 'mobile-products.png'), animations='disabled')
             page.keyboard.press('Escape')
             page.locator('#chapter-leader').scroll_into_view_if_needed()
@@ -172,6 +291,16 @@ with sync_playwright() as p:
     assert not errors, errors
     motion_page = browser.new_page(viewport={'width': 1440, 'height': 1000})
     motion_page.goto('http://127.0.0.1:4173/?v=30', wait_until='networkidle')
+    motion_page.locator('.page-shell [data-modal="intro"]').click()
+    assert 'close-animated.svg' in motion_page.locator('#intro .close').evaluate(
+        '(el) => getComputedStyle(el).backgroundImage'
+    )
+    assert motion_page.locator('#intro .close .icon').evaluate(
+        '(el) => getComputedStyle(el).opacity === "0"'
+    )
+    motion_page.wait_for_timeout(800)
+    motion_page.screenshot(path=str(OUTPUT / 'modal-motion.png'))
+    motion_page.keyboard.press('Escape')
     motion_page.locator('.site-nav [data-scroll="chapter-programs"]').hover()
     assert motion_page.locator('.site-nav [data-scroll="chapter-programs"]').evaluate(
         '(el) => getComputedStyle(el, "::after").animationName === "doodle-line-nudge"'
@@ -226,5 +355,5 @@ with sync_playwright() as p:
     )
     mobile_motion_page.close()
     browser.close()
-    print('PASS: 7 code-built topics, compact two-row mobile navigation, 7 generated scene layers, readable typography, 8 dialogs, navigation scrolling, keyboard controls, desktop and mobile motion, reduced-motion fallback, no external navigation, 5 responsive widths, no JS errors.')
+    print('PASS: 7 code-built topics, compact two-row mobile navigation, 7 generated scene layers, readable typography, 9 dialogs, navigation scrolling, keyboard controls, desktop and mobile motion, reduced-motion fallback, no external navigation, 5 responsive widths, no JS errors.')
     print('Previews: ' + str(OUTPUT))

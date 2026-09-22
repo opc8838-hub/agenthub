@@ -6,7 +6,7 @@
 <meta name="description" content="碳基社区扎根东莞，连接 AI 人才与实体企业，了解进厂计划、企客松、Agent 实战课程、产品开发和一对一辅导">
 <title>碳基社区 · AI 实战与智能体计划</title>
 <link rel="preload" href="assets/community-cn.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="styles.css?v=30">
+<link rel="stylesheet" href="styles.css?v=31">
 <script defer src="app.js?v=30"></script>
 </head>
 <body>
@@ -42,6 +42,14 @@
 <symbol id="i-cube" viewBox="0 0 48 48"><path d="m24 5 18 10v20L24 45 6 35V15L24 5Zm0 20v20M6 15l18 10 18-10M15 10l18 10v10"/></symbol>
 <symbol id="i-target" viewBox="0 0 48 48"><circle cx="23" cy="25" r="17"/><circle cx="23" cy="25" r="10"/><circle cx="23" cy="25" r="3"/><path d="m23 25 18-18m-1 9V8h-8m9-1 3-3"/></symbol>
 <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M16 8V3H3v13h5"/></symbol>
+<symbol id="i-grid" viewBox="0 0 48 48"><rect x="7" y="7" width="12" height="12" rx="2"/><rect x="29" y="7" width="12" height="12" rx="2"/><rect x="7" y="29" width="12" height="12" rx="2"/><rect x="29" y="29" width="12" height="12" rx="2"/></symbol>
+<symbol id="i-video" viewBox="0 0 48 48"><rect x="5" y="9" width="38" height="30" rx="6"/><path d="m20 17 13 7-13 7V17Z" fill="currentColor" stroke="none"/></symbol>
+<symbol id="i-image" viewBox="0 0 48 48"><rect x="6" y="7" width="36" height="34" rx="4"/><circle cx="31" cy="17" r="4"/><path d="m10 36 10-12 7 7 5-5 7 10"/></symbol>
+<symbol id="i-megaphone" viewBox="0 0 48 48"><path d="M8 21v8l8 2 20 9V10L16 19 8 21Z"/><path d="m16 31 3 11h7l-2-8M36 19h6m-6 10h6"/></symbol>
+<symbol id="i-cart" viewBox="0 0 48 48"><path d="M5 8h6l5 24h22l5-16H14M18 22h22"/><circle cx="20" cy="40" r="3"/><circle cx="36" cy="40" r="3"/></symbol>
+<symbol id="i-briefcase" viewBox="0 0 48 48"><rect x="5" y="14" width="38" height="27" rx="3"/><path d="M18 14V8h12v6M5 25h38M21 23h6v5h-6z"/></symbol>
+<symbol id="i-chat" viewBox="0 0 48 48"><path d="M5 9h26v20H17L9 36v-7H5V9Z"/><path d="M20 19h23v17h-4v7l-8-7H20V19Z"/></symbol>
+<symbol id="i-wrench" viewBox="0 0 48 48"><path d="M29 9a10 10 0 0 0-12 13L5 34l9 9 12-12A10 10 0 0 0 39 19l-7 7-7-3-3-7 7-7Z"/></symbol>
 </defs></svg>
 
 <div class="paper-grain" aria-hidden="true"></div>
@@ -171,14 +179,111 @@
 <div class="modal-layer" id="directory" role="dialog" aria-modal="true" aria-labelledby="directory-title" hidden><section class="modal"><header class="modal-top"><p class="modal-kicker">页面目录</p><button class="close" type="button" aria-label="关闭弹窗"><svg class="icon " aria-hidden="true"><use href="#i-close"/></svg></button></header><div class="modal-body"><h2 class="modal-title" id="directory-title">选择你感兴趣的主题</h2><div class="directory-list">
 <button type="button" data-scroll="chapter-community"><span>01</span>社区介绍<svg class="icon " aria-hidden="true"><use href="#i-arrow"/></svg></button><button type="button" data-scroll="chapter-programs"><span>02</span>长期计划<svg class="icon " aria-hidden="true"><use href="#i-arrow"/></svg></button><button type="button" data-scroll="chapter-leader"><span>03</span>负责人 / 主讲老师<svg class="icon " aria-hidden="true"><use href="#i-arrow"/></svg></button><button type="button" data-scroll="chapter-courses"><span>04</span>课程成长路线<svg class="icon " aria-hidden="true"><use href="#i-arrow"/></svg></button><button type="button" data-scroll="chapter-social"><span>05</span>AI 实战社群<svg class="icon " aria-hidden="true"><use href="#i-arrow"/></svg></button><button type="button" data-scroll="chapter-products"><span>06</span>产品与定制开发<svg class="icon " aria-hidden="true"><use href="#i-arrow"/></svg></button><button type="button" data-scroll="chapter-consulting"><span>07</span>咨询与 1V1 陪跑<svg class="icon " aria-hidden="true"><use href="#i-arrow"/></svg></button>
 </div></div></section></div>
-<div class="modal-layer" id="intro" role="dialog" aria-modal="true" aria-labelledby="intro-title" hidden><section class="modal"><header class="modal-top"><p class="modal-kicker">About carbon community</p><button class="close" type="button" aria-label="关闭弹窗"><svg class="icon " aria-hidden="true"><use href="#i-close"/></svg></button></header><div class="modal-body"><h2 class="modal-title" id="intro-title">碳基社区</h2><p class="modal-intro">扎根东莞的 AI 协同创新平台，连接跨行业 AI 实践者、创作者、技术人才与实体企业，推动创意、技术与真实业务需求落地</p><div class="modal-divider"></div><div class="content-grid"><article class="content-block"><h3>2000+ 本地成员</h3><p>覆盖东莞各镇街，成员从青少年、创作者、企业从业者到资深专家，跨行业、跨年龄同频交流</p></article><article class="content-block"><h3>40+ 场 AI 主题活动</h3><p>自 2025 年 8 月成立以来，每日交流、每周活动、每月赛事，保持常态化供需对接</p></article><article class="content-block wide"><h3>让人才、创意与产业相遇</h3><p>围绕活动、供需对接与人才连接，构建开放、互信的协同环境，持续追踪前沿 AI 技术，推动项目实战、成果打磨与产业对接</p></article></div></div></section></div>
+<div class="modal-layer" id="intro" role="dialog" aria-modal="true" aria-labelledby="intro-title" hidden>
+  <section class="modal">
+    <header class="modal-top community-modal-top"><h2 class="modal-title" id="intro-title">碳基社区</h2><button class="close" type="button" aria-label="关闭弹窗"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button></header>
+    <div class="modal-body community-modal-body">
+      <div class="community-heading">
+        <p class="modal-intro">扎根东莞的 AI 协同创新平台，连接跨行业 AI 实践者、创作者、技术人才与实体企业，推动创意、技术与真实业务需求落地</p>
+      </div>
+      <div class="community-gallery" aria-label="碳基社区活动现场">
+        <figure>
+          <img src="assets/community-trae-friends.png" alt="TRAE Friends 东莞活动现场集体合影" width="1448" height="1086" loading="lazy" decoding="async">
+          <figcaption>TRAE Friends @ 东莞</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/community-agi-meetup.png" alt="通往 AGI 之路 AI 切磋大会集体合影" width="1536" height="1024" loading="lazy" decoding="async">
+          <figcaption>通往 AGI 之路 · AI 切磋大会</figcaption>
+        </figure>
+      </div>
+      <div class="community-stats">
+        <article class="community-stat">
+          <h3><span class="community-metric">2000+</span><span>本地成员</span></h3>
+          <p>覆盖东莞各镇街，成员从青少年、创作者、企业从业者到资深专家，跨行业、跨年龄同频交流</p>
+        </article>
+        <article class="community-stat">
+          <h3><span class="community-metric">40+</span><span>场 AI 主题活动</span></h3>
+          <p>自 2025 年 8 月成立以来，每日交流、每周活动、每月赛事，保持常态化供需对接</p>
+        </article>
+      </div>
+      <article class="community-purpose">
+        <h3>让人才、创意与产业相遇</h3>
+        <p>围绕活动、供需对接与人才连接，构建开放、互信的协同环境，持续追踪前沿 AI 技术，推动项目实战、成果打磨与产业对接</p>
+      </article>
+    </div>
+  </section>
+</div>
   <div class="modal-layer" id="plans" role="dialog" aria-modal="true" aria-labelledby="plans-title" hidden><section class="modal"><header class="modal-top"><p class="modal-kicker">Long-term programs</p><button class="close" type="button" aria-label="关闭弹窗"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button></header><div class="modal-body"><h2 class="modal-title" id="plans-title">长期计划</h2><p class="modal-intro">通过进入企业现场与引入真实业务命题两条路径，让 AI 人才、项目和产业需求持续相遇</p><div class="modal-divider"></div><div class="content-grid"><article class="content-block"><h3>进厂计划</h3><p>深入有 AI 转型需求的企业一线，实地调研真实业务场景，挖掘落地痛点，输出定制化 AI 解决方案，助力企业降本增效</p><div class="tag-list"><span class="tag">业务调研</span><span class="tag">场景拆解</span><span class="tag">AI 方案</span></div></article><article class="content-block dark"><h3>企业黑客松</h3><p>以企业真实业务命题举办企客松，汇聚东莞 AI 创作者共创方案；通过赛事评审筛选优质人才与可行方案，为企业建立长期 AI 创新供给通道</p><div class="tag-list"><span class="tag">真实命题</span><span class="tag">共创竞赛</span><span class="tag">人才连接</span></div></article></div><div class="cta-row"><p>企业希望参与进厂计划，或创作者希望参与企客松？联系负责人，了解参与方式</p><button class="inside-button" data-modal="contact" type="button">联系负责人</button></div></div></section></div>
 
   <div class="modal-layer" id="leader" role="dialog" aria-modal="true" aria-labelledby="leader-title" hidden><section class="modal"><header class="modal-top"><p class="modal-kicker">负责人 / 主讲老师</p><button class="close" type="button" aria-label="关闭弹窗"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button></header><div class="modal-body"><img class="profile-portrait" src="assets/leader-li-jiantang-v1.png" alt="黎健堂个人形象" width="1536" height="1024" loading="lazy"><h2 class="modal-title" id="leader-title">黎健堂</h2><p class="modal-intro">东莞本地懂 Agent 落地与 AI 产品开发的人｜产品设计与开发 · Agent 落地 · 商业实践</p><div class="modal-divider"></div><div class="content-grid"><article class="content-block wide"><p>我是黎健堂，一个土生土长的东莞人，拥有 5 年阿里市场销售与业务管理经验、3 年连锁餐饮品牌创业经历，以及 2 年抖音本地生活服务商经验，目前专注于 Agent 落地、业务工作流搭建、产品设计与开发，以及网站、小型 SaaS 和 AI 应用的实现</p></article><article class="content-block"><h3>经历与背书</h3><ul><li>5 年阿里经历：市场销售与业务管理</li><li>3 年餐饮创业：连锁餐饮品牌创业经验</li><li>2 年抖音本地生活服务商经验</li><li>碳基社区 AI 实战与智能体计划负责人 / 主讲老师</li><li>东莞漫博会黑客松 Agent 赛道第一名</li><li>企客松 Agent 赛道第一名</li></ul></article><article class="content-block"><h3>擅长方向</h3><ul><li>Agent 结合业务落地</li><li>业务工作流搭建</li><li>产品设计与开发</li><li>网站与小型 SaaS</li><li>IP 设计与视频动效</li></ul></article></div></div></section></div>
 
   <div class="modal-layer" id="courses" role="dialog" aria-modal="true" aria-labelledby="courses-title" hidden><section class="modal"><header class="modal-top"><p class="modal-kicker">Learning path</p><button class="close" type="button" aria-label="关闭弹窗"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button></header><div class="modal-body"><h2 class="modal-title" id="courses-title">从认识 Agent，<br>到做出真实成果</h2><p class="modal-intro">免费公开课完成第一次体验；系列课程帮助零基础用户把 AI 变成真正能够完成日常工作的伙伴</p><div class="modal-divider"></div><div class="content-grid"><article class="content-block wide"><h3>免费公开课</h3><p>看见 Agent 如何从“聊天”变成“完成工作”，现场完成第一次 Agent 交付，并找到自己的一个 AI 使用场景</p></article><article class="content-block wide"><h3>《AI Agent 入门 <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg> WorkBuddy 实战》</h3><ol><li>认识 Agent：完成第一次交付，理解任务指令</li><li>文档：处理报告、纪要、邮件等写作工作</li><li>数据：分析 Excel、生成图表和业务结论</li><li>交付与进阶：制作 PPT、网页、Skill 与自动化任务</li></ol></article><article class="content-block"><h3>中阶实战课 <small>规划中</small></h3><p>Skill、个人工作流、知识库、专家角色、连接器与自动化任务</p></article><article class="content-block"><h3>高阶创造课 <small>规划中</small></h3><p>Vibe Coding、网站、Demo 与小型 SaaS 的产品制作和迭代</p></article></div><div class="cta-row"><p>下一期课程与公开课场次正在整理中，可先登记获取通知</p><button class="inside-button" data-modal="contact" type="button">登记课程通知</button></div></div></section></div>
 
-  <div class="modal-layer" id="community" role="dialog" aria-modal="true" aria-labelledby="community-modal-title" hidden><section class="modal"><header class="modal-top"><p class="modal-kicker">AI practice community</p><button class="close" type="button" aria-label="关闭弹窗"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button></header><div class="modal-body"><h2 class="modal-title" id="community-modal-title">AI 实战社群<br>与 Skill 工具库</h2><p class="modal-intro">持续获取 AI 资讯、实用工具、Skill 和日常答疑</p><div class="modal-divider"></div><div class="content-grid"><article class="content-block"><h3>社群服务</h3><ul><li>每日 AI 新闻与重要动态</li><li>实用 AI 工具和插件更新</li><li>Skill 筛选、整理与分享</li><li>AI 知识、案例和使用方法</li><li>社群日常答疑与问题交流</li><li>Agent、工作流和 AI 应用能力培养</li></ul></article><article class="content-block dark"><h3>近 2000 个生图资源</h3><p>提供近 2000 个生图提示词与模板，覆盖不同风格与场景，让普通用户也能快速出图</p><div class="tag-list"><span class="tag">模板快速出图</span><span class="tag">风格参考</span><span class="tag">创作灵感</span></div></article><article class="content-block wide"><h3>Skill 与工具库</h3><div class="tag-list"><span class="tag">办公效率</span><span class="tag">内容创作</span><span class="tag">图片与视频</span><span class="tag">产品设计</span><span class="tag">网站与 Vibe Coding</span><span class="tag">Agent 与自动化工作流</span><span class="tag">商业分析与运营</span></div><p>每个条目将展示名称、解决的问题、适合人群和简单使用说明；自己打造的 Skill 标记为“原创”，精选工具标记为“推荐”</p></article></div><div class="cta-row"><p>社群正在筹备中，首批成员开放登记；收费方式和价格将在确定后更新</p><button class="inside-button" data-modal="contact" type="button">登记加入社群</button></div></div></section></div>
+  <div class="modal-layer" id="community" role="dialog" aria-modal="true" aria-labelledby="community-modal-title" hidden>
+    <section class="modal community-offer-modal">
+      <header class="modal-top community-offer-top">
+        <h2 class="modal-title" id="community-modal-title">AI 实战社群与 Skill 工具库</h2>
+        <button class="close" type="button" aria-label="关闭弹窗"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button>
+        <svg class="community-peek-bot" viewBox="0 0 150 170" aria-hidden="true">
+          <circle class="bot-antenna" cx="77" cy="17" r="11"/><path d="M77 28v12"/>
+          <path class="bot-head" d="M40 49c11-18 43-22 62-9 17 12 23 42 14 62-9 19-34 31-54 23-24-9-36-52-22-76Z"/>
+          <path class="bot-face" d="M47 61c13-13 43-16 57-5 11 9 14 30 7 42-10 17-40 23-54 10-12-11-21-35-10-47Z"/>
+          <path d="m31 36-9-10m4 26-14-2m26-29-5-13" class="bot-rays"/>
+          <path class="bot-arm" d="M111 98c5 16 10 22 20 23 10 1 14 8 10 15-5 9-20 4-30-5-8-8-12-17-13-26"/>
+          <path d="M126 116c-2 15-2 30 0 45"/>
+          <circle cx="67" cy="81" r="5" fill="white" stroke="none"/><circle cx="94" cy="78" r="5" fill="white" stroke="none"/>
+        </svg>
+      </header>
+      <div class="modal-body community-offer-body">
+        <p class="modal-intro community-offer-intro">持续获取 AI 资讯、实用工具、Skill 和日常答疑，把零散资源变成随时可用的实战能力</p>
+        <section class="community-offer-summary" aria-label="社群与工具库概览">
+          <article class="community-summary-card"><svg class="community-summary-icon" aria-hidden="true"><use href="#i-cube"/></svg><div><strong>28</strong><span>个实用 Skill 与工具</span></div></article>
+          <article class="community-summary-card"><svg class="community-summary-icon" aria-hidden="true"><use href="#i-grid"/></svg><div><strong>9</strong><span>大应用分类</span></div></article>
+          <article class="community-price" aria-label="社群限时价格"><span>首批成员限时价</span><div><strong><small>¥</small>99</strong><del>原价 ¥199</del></div><p>一次加入，持续更新</p></article>
+        </section>
+
+        <section class="community-catalog" aria-labelledby="community-catalog-title">
+          <div class="community-section-heading"><h3 id="community-catalog-title">实用工具库</h3></div>
+          <ul class="community-category-list">
+            <li><svg class="community-category-icon icon-video" aria-hidden="true"><use href="#i-video"/></svg><p><strong>10 个</strong><span>视频与动态内容</span></p></li>
+            <li><svg class="community-category-icon icon-image" aria-hidden="true"><use href="#i-image"/></svg><p><strong>4 个</strong><span>设计与图像</span></p></li>
+            <li><svg class="community-category-icon icon-writing" aria-hidden="true"><use href="#i-book"/></svg><p><strong>3 个</strong><span>写作与研究</span></p></li>
+            <li><svg class="community-category-icon icon-social" aria-hidden="true"><use href="#i-megaphone"/></svg><p><strong>3 个</strong><span>社交媒体与内容运营</span></p></li>
+            <li><svg class="community-category-icon icon-shop" aria-hidden="true"><use href="#i-cart"/></svg><p><strong>1 个</strong><span>电商与营销</span></p></li>
+            <li><svg class="community-category-icon icon-career" aria-hidden="true"><use href="#i-briefcase"/></svg><p><strong>1 个</strong><span>求职与职业</span></p></li>
+            <li><svg class="community-category-icon icon-code" aria-hidden="true"><use href="#i-code"/></svg><p><strong>2 个</strong><span>浏览器、命令行与自动化</span></p></li>
+            <li><svg class="community-category-icon icon-chat" aria-hidden="true"><use href="#i-chat"/></svg><p><strong>3 个</strong><span>微信与协作数据</span></p></li>
+            <li><svg class="community-category-icon icon-wrench" aria-hidden="true"><use href="#i-wrench"/></svg><p><strong>1 个</strong><span>Skill 开发与维护</span></p></li>
+          </ul>
+        </section>
+
+        <section class="community-services" aria-label="社群包含的服务">
+          <article class="community-service-list">
+            <h3>社群服务</h3>
+            <ul><li>每日 AI 新闻与重要动态</li><li>实用 AI 工具和插件更新</li><li>Skill 筛选、整理与分享</li><li>AI 知识、案例和使用方法</li><li>社群日常答疑与问题交流</li><li>Agent、工作流和 AI 应用能力培养</li></ul>
+          </article>
+          <article class="community-image-service">
+            <svg class="community-service-icon" aria-hidden="true"><use href="#i-image"/></svg>
+            <h3>近 <strong>2000 个</strong>生图资源</h3>
+            <p>提供近 2000 个生图提示词与模板，覆盖不同风格与场景，让普通用户也能快速出图</p>
+            <div class="tag-list"><span class="tag">模板快速出图</span><span class="tag">风格参考</span><span class="tag">创作灵感</span></div>
+          </article>
+        </section>
+
+        <section class="community-join" aria-label="加入社群">
+          <div class="community-join-copy">
+            <h3>扫码添加微信</h3>
+            <p>备注“<strong>社群</strong>”，加入首批成员</p>
+            <button class="inside-button" data-modal="contact" type="button">无法扫码？查看微信号 <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+          </div>
+          <figure class="community-qr">
+            <img src="assets/community-wechat-qr-green.jpg" alt="黎健堂微信二维码，非支付码" width="651" height="642" loading="lazy">
+            <figcaption>微信扫码添加 · 非支付码</figcaption>
+          </figure>
+        </section>
+      </div>
+    </section>
+  </div>
 
   <div class="modal-layer" id="products" role="dialog" aria-modal="true" aria-labelledby="products-title" hidden><section class="modal"><header class="modal-top"><p class="modal-kicker">Products / custom build</p><button class="close" type="button" aria-label="关闭弹窗"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button></header><div class="modal-body"><h2 class="modal-title" id="products-title">产品与<br>定制开发</h2><p class="modal-intro">从产品设计到开发落地，把想法变成真正可使用的网站、Agent、工作流和 SaaS 产品</p><div class="modal-divider"></div><div class="content-grid"><article class="content-block wide"><h3>Hely.fun</h3><p>个人创办的 AI 生图创作平台，基于 GPT Image 2.5，不需要编写复杂提示词，选择模板即可快速生成图片；提供近 2000 个生图提示词与模板，适合普通用户、设计师和内容创作者</p></article><article class="content-block"><h3>多平台发布助手</h3><p>原生支持 Windows 和 macOS，导入一个视频即可辅助匹配字幕、生成封面，并支持视频号、小红书、抖音自动填写标题和发布内容；可继续扩展 Bilibili、X、Instagram、Reddit 等平台</p></article><article class="content-block"><h3>Today on Earth</h3><p>每天早晚各生成一条 48 秒视频，包含太空站镜头与六个全球不同地区镜头；背后是一套全球实时镜头采集、筛选和视频生成系统</p></article><article class="content-block"><h3>Cardbot · Demo</h3><p>面向全球贸易团队的 AI 客户开发与邮件协作 SaaS，用于潜在客户发现、信息整理、邮件生成和协作跟进</p></article><article class="content-block"><h3>Sea Space · Demo</h3><p>面向出海创始人和品牌团队的内容增长 SaaS，连接海外信号、IP 爆题、多平台内容适配、销售跟进和结果反馈</p></article><article class="content-block wide dark"><h3>可提供的定制服务</h3><div class="tag-list"><span class="tag">企业官网和品牌网站</span><span class="tag">海外独立站</span><span class="tag">AI Agent 定制</span><span class="tag">自动化工作流</span><span class="tag">SaaS 与业务系统</span><span class="tag">小程序</span><span class="tag">业务 AI 化改造</span></div></article></div><div class="cta-row"><p>想了解产品演示，或讨论一个具体项目？联系黎健堂，聊聊你希望解决的问题</p><button class="inside-button" data-modal="contact" type="button">沟通定制需求</button></div></div></section></div>
 
