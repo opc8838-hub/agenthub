@@ -203,6 +203,9 @@ with sync_playwright() as p:
     assert course_modal.evaluate('(el) => el.scrollWidth <= el.clientWidth')
     assert course_modal.evaluate('(el) => el.scrollHeight <= el.clientHeight')
     page.screenshot(path=str(OUTPUT / 'courses-modal.png'), animations='disabled')
+    course_dialog.locator('.course-consult-button').click()
+    assert page.locator('#contact').is_visible()
+    page.keyboard.press('Escape')
     page.mouse.click(5, 5)
     assert page.locator('#courses').is_hidden()
     for width in [390, 375, 320, 768, 1024]:
@@ -264,11 +267,18 @@ with sync_playwright() as p:
             assert page.locator('#intro .community-metric-card').count() == 3
             page.screenshot(path=str(OUTPUT / 'mobile-intro.png'), animations='disabled')
             page.keyboard.press('Escape')
+            page.locator('.page-shell [data-modal="courses"]').click()
+            mobile_course = page.locator('#courses')
+            assert mobile_course.locator('.course-consult-button').is_visible()
+            page.screenshot(path=str(OUTPUT / 'mobile-courses.png'), animations='disabled')
+            mobile_course.locator('.course-consult-button').click()
+            assert page.locator('#contact').is_visible()
+            page.keyboard.press('Escape')
             page.locator('.page-shell [data-modal="community"]').click()
             mobile_community = page.locator('#community')
             assert mobile_community.is_visible()
             assert mobile_community.locator('.community-category-list').evaluate(
-                '(el) => getComputedStyle(el).gridTemplateColumns.split(" ").length === 1'
+                '(el) => getComputedStyle(el).gridTemplateColumns.split(" ").length === 2'
             )
             assert mobile_community.locator('.community-qr img').bounding_box()['width'] <= 240
             assert page.evaluate('document.documentElement.scrollWidth <= innerWidth')

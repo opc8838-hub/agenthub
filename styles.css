@@ -3525,3 +3525,88 @@ body{background:var(--paper);color:var(--ink);font-weight:450}
     stroke-width:2.4;
   }
 }
+
+/* Course consultation entry: the mascot and action share the right of the hero. */
+#courses .course-roadmap-hero{isolation:isolate}
+#courses .course-roadmap-bot{right:150px;width:268px;height:296px}
+.course-consult-button{
+  position:absolute;
+  z-index:4;
+  top:94px;
+  right:6px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  min-width:132px;
+  min-height:52px;
+  padding:10px 20px;
+  border-radius:999px;
+  background:#1764f5;
+  color:#fff;
+  font-size:18px;
+  font-weight:750;
+  line-height:1;
+  box-shadow:0 10px 24px rgb(23 100 245 / .16);
+}
+.course-consult-button .icon{width:19px;height:19px}
+.course-consult-button:hover{background:#0f55d6}
+.course-consult-button:focus-visible{outline:3px solid #84b4ff;outline-offset:3px}
+
+@media(min-width:851px) and (max-width:1120px){
+  #courses .course-roadmap-bot{top:-22px;right:150px;width:150px;height:154px}
+  .course-consult-button{top:22px;right:0;min-width:108px;min-height:44px;padding:8px 15px;font-size:16px}
+}
+
+/* The two counts use the same icon, numeral and label columns. */
+.community-summary-card{justify-content:flex-start;padding-inline:clamp(18px,2vw,30px)}
+.community-summary-card .community-summary-icon{width:42px;height:42px}
+.community-summary-card>div{display:grid;grid-template-columns:72px minmax(0,1fr);align-items:baseline;justify-content:initial;gap:8px;width:100%}
+.community-summary-card strong{display:block;text-align:right}
+.community-summary-card span{white-space:normal}
+
+@media(max-width:850px){
+  #courses .course-roadmap-bot{display:none}
+  .course-consult-button{top:2px;right:0;min-width:102px;min-height:44px;padding:8px 14px;font-size:16px}
+}
+
+@media(max-width:600px){
+  #courses .course-roadmap-hero{padding-top:2px}
+  .course-consult-button{top:1px;right:0;min-width:74px;min-height:38px;gap:0;padding:7px 12px;font-size:15px}
+  .course-consult-button .icon{display:none}
+
+  .community-offer-summary{grid-template-columns:1fr;gap:10px}
+  .community-summary-card,.community-price{min-height:94px}
+  .community-summary-card{gap:16px;padding-inline:26px}
+  .community-summary-card>div{grid-template-columns:62px minmax(0,1fr);gap:8px}
+  .community-summary-card strong{font-size:2.55rem}
+  .community-summary-card span{font-size:.78rem;white-space:nowrap}
+  .community-category-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .community-category-list li{min-height:96px;gap:8px;padding:12px 10px}
+  .community-category-list li:last-child{grid-column:1/-1;justify-content:center}
+  .community-category-icon,.community-category-list li:nth-child(8) .community-category-icon,.community-category-list li:nth-child(9) .community-category-icon{width:28px;height:28px}
+  .community-category-list strong{font-size:1rem}
+  .community-category-list span{font-size:.73rem;line-height:1.35;white-space:normal;overflow-wrap:anywhere}
+  .community-service-list{display:grid;justify-items:center}
+  .community-service-list h3{justify-content:center}
+  .community-services ul{width:max-content;max-width:100%;justify-self:center}
+  .community-image-service{grid-template-columns:38px minmax(0,1fr);align-items:center}
+  .community-image-service .tag-list{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;margin-top:9px}
+  .community-image-service .tag{min-width:0;padding:5px 3px;font-size:.69rem;white-space:nowrap;text-align:center}
+}
+
+@media(max-width:520px){
+  .consulting-service-heading{display:grid;justify-items:center;width:100%;text-align:center}
+  .consulting-service-heading h2{translate:0 0}
+  .consulting-title-mark{translate:0 0;margin-inline:auto}
+  .consulting-service-heading p{max-width:330px;text-align:center}
+  .consulting-option-card>header{grid-template-columns:1fr;justify-items:center;gap:9px;text-align:center}
+  .consulting-option-card>header>div{width:100%}
+  .consulting-option-card ul{width:max-content;max-width:100%;margin-inline:auto}
+}
+
+@media(max-width:360px){
+  #courses .course-roadmap-hero{flex-direction:column}
+  .course-consult-button{position:static;align-self:flex-end;margin-top:8px}
+  .community-summary-card span{font-size:.74rem;white-space:normal}
+}
