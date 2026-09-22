@@ -3493,3 +3493,35 @@ body{background:var(--paper);color:var(--ink);font-weight:450}
   .consulting-info{flex-basis:40px;width:40px;height:40px;font-size:18px}
   #consulting .consulting-booking{min-width:206px;min-height:52px;padding:10px 23px 10px 27px;font-size:19px}
 }
+
+/* Mobile modal controls: every full-screen sheet owns vertical touch scrolling.
+   Keep the close target large, but render only the inline X without a pale disc. */
+@media(max-width:820px){
+  .modal-layer > .modal{
+    overflow-y:auto!important;
+    overscroll-behavior-y:contain;
+    -webkit-overflow-scrolling:touch;
+    touch-action:pan-y;
+  }
+
+  .modal-layer .close,
+  .modal-layer .close:hover,
+  .modal-layer .close:active,
+  .modal-layer .close:focus,
+  .modal-layer .close:focus-visible{
+    border:0;
+    outline:0;
+    color:#111827;
+    background:transparent!important;
+    box-shadow:none!important;
+    backdrop-filter:none;
+    -webkit-tap-highlight-color:transparent;
+  }
+
+  .modal-layer .close .icon{
+    width:28px;
+    height:28px;
+    opacity:1;
+    stroke-width:2.4;
+  }
+}

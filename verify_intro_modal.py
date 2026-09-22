@@ -39,5 +39,37 @@ with sync_playwright() as playwright:
     assert social_dialog.locator(".community-offer-modal").count() == 1
     assert social_dialog.locator("#community-modal-title").inner_text() == "AI 实战社群与工具库"
     assert not errors, errors
+
+    mobile = browser.new_page(viewport={"width": 390, "height": 844}, is_mobile=True)
+    mobile.goto("http://127.0.0.1:4173/?intro-mobile-scroll=1", wait_until="networkidle")
+    mobile.locator('.chapter-community [data-modal="intro"]').click()
+    mobile_modal = mobile.locator("#intro .community-showcase-modal")
+    assert mobile_modal.evaluate("el => el.scrollHeight > el.clientHeight")
+    assert mobile_modal.evaluate("el => getComputedStyle(el).overflowY") == "auto"
+    mobile_modal.evaluate("el => { el.scrollTop = 420 }")
+    assert mobile_modal.evaluate("el => el.scrollTop") > 0
+
+    mobile_close = mobile.locator("#intro .close")
+    close_style = mobile_close.evaluate("el => { const s = getComputedStyle(el); return { backgroundImage: s.backgroundImage, backgroundColor: s.backgroundColor, boxShadow: s.boxShadow } }")
+    assert close_style["backgroundImage"] == "none"
+    assert close_style["backgroundColor"] in ("rgba(0, 0, 0, 0)", "transparent")
+    assert close_style["boxShadow"] == "none"
+    assert mobile_close.locator(".icon").evaluate("el => getComputedStyle(el).opacity") == "1"
+    mobile.screenshot(path=str(ROOT / "output" / "playwright" / "mobile-intro-scroll-close.png"), animations="disabled")
+
+    mobile_close.click()
+    for modal_id in ("plans", "leader", "courses", "community", "products", "consulting"):
+        mobile.locator(f'.chapter [data-modal="{modal_id}"]').click()
+        current_modal = mobile.locator(f"#{modal_id} .modal")
+        current_close = mobile.locator(f"#{modal_id} .close")
+        assert current_modal.evaluate("el => getComputedStyle(el).overflowY") == "auto"
+        current_style = current_close.evaluate("el => { const s = getComputedStyle(el); return { backgroundImage: s.backgroundImage, backgroundColor: s.backgroundColor, boxShadow: s.boxShadow } }")
+        assert current_style["backgroundImage"] == "none", modal_id
+        assert current_style["backgroundColor"] in ("rgba(0, 0, 0, 0)", "transparent"), modal_id
+        assert current_style["boxShadow"] == "none", modal_id
+        assert current_close.locator(".icon").evaluate("el => getComputedStyle(el).opacity") == "1", modal_id
+        current_close.click()
+    mobile.close()
+
     browser.close()
-    print("PASS: primary community CTA opens the redesigned, non-scrolling showcase")
+    print("PASS: community modal scrolls on mobile and mobile close controls stay transparent")
