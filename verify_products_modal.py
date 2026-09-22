@@ -24,7 +24,11 @@ with sync_playwright() as playwright:
     assert videos.count() == 7
     assert dialog.locator(".product-poster").count() == 7
     assert dialog.locator(".product-showcase-card").count() == 7
-    assert dialog.locator('.product-showcase-card[target="_blank"]').count() == 7
+    assert dialog.locator('.product-showcase-card[href]').count() == 7
+    assert dialog.locator('.product-showcase-card[target="_blank"]').count() == 0
+    assert videos.evaluate_all(
+        "videos => videos.every(video => getComputedStyle(video).pointerEvents === 'none')"
+    )
     assert modal.evaluate("el => el.scrollWidth <= el.clientWidth")
     assert dialog.locator(".products-service-panel").is_visible()
 
