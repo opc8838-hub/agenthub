@@ -39,6 +39,8 @@ with sync_playwright() as p:
     assert page.locator('#i-chevron-up').count() == 1
     assert page.locator('#i-chevron-down').count() == 1
     assert page.locator('#i-chip').count() == 1
+    assert page.locator('#i-chat circle').count() == 4
+    assert page.locator('#i-wrench').get_attribute('viewBox') == '0 0 24 24'
     assert page.locator('.modal-layer').count() == 9
     assert page.locator('.close').count() == 9
     assert all(header.evaluate(

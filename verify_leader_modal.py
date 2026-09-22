@@ -44,6 +44,7 @@ with sync_playwright() as playwright:
     assert modal.evaluate("el => el.scrollHeight <= el.clientHeight + 1")
     assert dialog.locator(".leader-profile-card").count() == 2
     assert dialog.locator(".leader-profile-card li").count() == 10
+    assert not dialog.locator(".leader-profile-summary").inner_text().startswith("我是黎健堂，")
     expected_award = "两次 黑客松 Agent 赛道第一名"
     assert dialog.locator(".leader-profile-experience li").last.inner_text() == expected_award
     chapter_award_text = " ".join(

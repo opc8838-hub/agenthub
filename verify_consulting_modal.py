@@ -65,7 +65,7 @@ with sync_playwright() as playwright:
     assert compact_dialog.is_visible()
     assert compact_modal.evaluate("el => el.scrollHeight <= el.clientHeight")
     assert compact_modal.evaluate("el => el.scrollWidth <= el.clientWidth")
-    compact_art = compact_dialog.locator(".consulting-service-art img").bounding_box()
+    compact_art = compact_dialog.locator(".consulting-service-art").bounding_box()
     compact_cards = compact_dialog.locator(".consulting-option-grid").bounding_box()
     compact.screenshot(
         path=str(OUTPUT / "consulting-modal-compact.png"), animations="disabled"
@@ -73,6 +73,20 @@ with sync_playwright() as playwright:
     assert compact_art["y"] + compact_art["height"] <= compact_cards["y"] + 1
     assert compact_dialog.locator(".consulting-service-footer").is_visible()
     compact.close()
+
+    reference = browser.new_page(viewport={"width": 1380, "height": 920})
+    reference.goto(
+        "http://127.0.0.1:4173/?consulting=reference", wait_until="networkidle"
+    )
+    reference.locator('.page-shell [data-modal="consulting"]').first.click()
+    reference_modal = reference.locator("#consulting .consulting-service-modal")
+    assert reference_modal.evaluate("el => el.scrollHeight <= el.clientHeight")
+    assert reference_modal.evaluate("el => getComputedStyle(el).overflowY === 'hidden'")
+    reference.screenshot(
+        path=str(OUTPUT / "consulting-modal-reference-1380x920.png"),
+        animations="disabled",
+    )
+    reference.close()
 
     mobile = browser.new_page(
         viewport={"width": 390, "height": 844}, is_mobile=True, has_touch=True

@@ -17,11 +17,36 @@
   let opener = null;
   let mobileNavOpen = false;
   const focusable = 'button:not([disabled]), input, textarea, select, a[href], [tabindex="0"]';
+  const coverHoldDuration = 1500;
+  const productVideoTimers = new WeakMap();
+
+  function clearProductVideoTimer(video) {
+    const timer = productVideoTimers.get(video);
+    if (timer) clearTimeout(timer);
+    productVideoTimers.delete(video);
+  }
+
+  function holdCoverThenPlay(video) {
+    clearProductVideoTimer(video);
+    video.pause();
+    try { video.currentTime = 0; } catch {}
+    video.closest('.product-media')?.classList.remove('is-playing');
+
+    const timer = setTimeout(() => {
+      productVideoTimers.delete(video);
+      if (active?.id !== 'products' || document.hidden) return;
+      video.muted = true;
+      const playback = video.play();
+      if (playback) playback.catch(() => {});
+    }, coverHoldDuration);
+    productVideoTimers.set(video, timer);
+  }
 
   document.querySelectorAll('.product-video').forEach(video => {
     video.addEventListener('playing', () => {
       video.closest('.product-media')?.classList.add('is-playing');
     });
+    video.addEventListener('ended', () => holdCoverThenPlay(video));
   });
 
   function startProductVideos(dialog) {
@@ -32,15 +57,14 @@
         source.src = source.dataset.src;
         video.load();
       }
-      video.muted = true;
-      const playback = video.play();
-      if (playback) playback.catch(() => {});
+      holdCoverThenPlay(video);
     });
   }
 
   function stopProductVideos(dialog, reset = false) {
     if (dialog?.id !== 'products') return;
     dialog.querySelectorAll('.product-video').forEach(video => {
+      clearProductVideoTimer(video);
       video.pause();
       if (reset) {
         video.currentTime = 0;
@@ -86,7 +110,7 @@
 
   document.addEventListener('visibilitychange', () => {
     if (active?.id !== 'products') return;
-    if (document.hidden) stopProductVideos(active);
+    if (document.hidden) stopProductVideos(active, true);
     else startProductVideos(active);
   });
 

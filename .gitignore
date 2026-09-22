@@ -14,3 +14,6 @@ assets/t-agent-cutout.png
 assets/t-agent-ip-profile.yaml
 assets/NotoSansSC-source.ttf
 assets/Inter.ttf
+
+.vercel
+.env*
