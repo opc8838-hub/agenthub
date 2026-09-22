@@ -118,8 +118,8 @@ with sync_playwright() as p:
         assert close_button.locator('.icon').evaluate('(el) => getComputedStyle(el).opacity === "1"')
         for button in dialog.locator('.inside-button').all():
             if topic == 'community':
-                assert button.evaluate('(el) => getComputedStyle(el).backgroundColor === "rgba(0, 0, 0, 0)"')
-                assert button.evaluate('(el) => getComputedStyle(el).color === "rgb(23, 100, 245)"')
+                assert button.evaluate('(el) => getComputedStyle(el).backgroundColor === "rgb(23, 100, 245)"')
+                assert button.evaluate('(el) => getComputedStyle(el).color === "rgb(255, 255, 255)"')
             else:
                 assert button.evaluate('(el) => getComputedStyle(el).backgroundColor === "rgb(23, 100, 245)"')
             assert float(button.evaluate('(el) => parseFloat(getComputedStyle(el).borderRadius)')) >= 20
@@ -166,13 +166,40 @@ with sync_playwright() as p:
             assert dialog.locator('.community-category-icon').count() == 9
             assert dialog.locator('.community-category-track').count() == 0
             assert dialog.locator('.community-summary-card strong').all_inner_texts() == ['28', '9']
+            summary_numbers = [item.bounding_box() for item in dialog.locator('.community-summary-card strong').all()]
+            summary_labels = [item.bounding_box() for item in dialog.locator('.community-summary-card span').all()]
+            assert abs(summary_numbers[0]['y'] - summary_numbers[1]['y']) < 1
+            assert abs(summary_labels[0]['y'] - summary_labels[1]['y']) < 1
+            assert all(card.evaluate(
+                '(el) => getComputedStyle(el.querySelector("div")).flexWrap === "nowrap"'
+            ) for card in dialog.locator('.community-summary-card').all())
             assert dialog.locator('.community-price strong').inner_text() == '¥99'
             assert dialog.locator('.community-price del').inner_text() == '原价 ¥199'
             qr = dialog.locator('.community-qr img')
             qr.evaluate('(img) => img.decode()')
             assert qr.evaluate('(img) => img.complete && img.naturalWidth === 651 && img.naturalHeight === 642')
             assert qr.get_attribute('src') == 'assets/community-wechat-qr-green.jpg'
-            assert dialog.locator('img').count() == 1
+            agent = dialog.locator('.community-peek-agent')
+            agent.evaluate('(img) => img.decode()')
+            assert agent.evaluate('(img) => img.complete && img.naturalWidth === 1062 && img.naturalHeight === 1481')
+            assert agent.get_attribute('src') == 'assets/community-peek-agent.png'
+            assert agent.evaluate('(img) => getComputedStyle(img).top === "90px"')
+            assert dialog.locator('img').count() == 2
+            assert dialog.locator('.community-price').evaluate(
+                '(el) => getComputedStyle(el).alignItems === "center" && getComputedStyle(el).textAlign === "center"'
+            )
+            join_copy_box = dialog.locator('.community-join-copy').bounding_box()
+            join_qr_box = dialog.locator('.community-qr').bounding_box()
+            assert abs(join_copy_box['width'] - join_qr_box['width']) < 2
+            qr_box = qr.bounding_box()
+            qr_caption_box = dialog.locator('.community-qr figcaption').bounding_box()
+            assert dialog.locator('.community-qr figcaption span').all_inner_texts() == ['微信扫码添加 ·', '非支付码']
+            qr_group_center = (qr_box['x'] + qr_caption_box['x'] + qr_caption_box['width']) / 2
+            qr_half_center = join_qr_box['x'] + join_qr_box['width'] / 2
+            assert qr_box['width'] >= 120
+            assert qr_group_center >= qr_half_center + 8
+            assert dialog.locator('.community-category-list li').nth(7).locator('use').get_attribute('href') == '#i-chat'
+            assert page.locator('symbol#i-chat circle').count() == 4
             assert '非支付码' in qr.get_attribute('alt')
             assert '社群服务' in dialog.inner_text()
             assert '近 2000 个' in dialog.inner_text()
@@ -288,6 +315,15 @@ with sync_playwright() as p:
             assert leader_spark_box['x'] >= leader_title_box['x'] + leader_title_box['width'] - 6
             assert leader_spark_box['x'] + leader_spark_box['width'] <= width
             page.screenshot(path=str(OUTPUT / 'mobile-leader.png'))
+    compact_desktop = browser.new_page(viewport={'width': 1200, 'height': 900}, device_scale_factor=1)
+    compact_desktop.goto('http://127.0.0.1:4173/?v=32', wait_until='networkidle')
+    compact_desktop.locator('.page-shell [data-modal="community"]').click()
+    compact_community = compact_desktop.locator('#community .community-offer-modal')
+    compact_desktop.locator('#community .community-qr img').evaluate('(img) => img.decode()')
+    compact_desktop.screenshot(path=str(OUTPUT / 'community-modal-1200x900.png'), animations='disabled')
+    assert compact_community.evaluate('(el) => el.scrollHeight <= el.clientHeight + 1')
+    assert compact_community.bounding_box()['height'] <= 860
+    compact_desktop.close()
     assert not errors, errors
     motion_page = browser.new_page(viewport={'width': 1440, 'height': 1000})
     motion_page.goto('http://127.0.0.1:4173/?v=30', wait_until='networkidle')
