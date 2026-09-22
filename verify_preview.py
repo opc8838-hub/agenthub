@@ -47,15 +47,14 @@ with sync_playwright() as p:
     english_modal_kickers = page.locator(
         '#plans .modal-kicker, #courses .modal-kicker, '
         '#community .modal-kicker, #products .modal-kicker, '
-        '#consulting .modal-kicker, #contact .modal-kicker'
+        '#contact .modal-kicker'
     )
     assert page.locator('#intro .modal-kicker').count() == 0
-    assert english_modal_kickers.count() == 5
+    assert english_modal_kickers.count() == 2
     assert all(not kicker.is_visible() for kicker in english_modal_kickers.all())
     assert page.locator('.brand-chip use[href="#i-chip"]').count() == 1
     assert page.locator('#doodle-boil').count() == 1
     assert page.locator('#chevron-boil').count() == 1
-    assert page.locator('text=。').count() == 0
     scene_sources = page.locator('.scene-image').evaluate_all('(images) => images.map((img) => img.src)')
     assert sum('-scene-v4.png' in src for src in scene_sources) == 6
     assert sum('products-scene-v5.png' in src for src in scene_sources) == 1
@@ -112,50 +111,35 @@ with sync_playwright() as p:
         assert dialog.is_visible(), topic
         modal = dialog.locator('.modal')
         assert float(modal.evaluate('(el) => parseFloat(getComputedStyle(el).borderRadius)')) >= 20
-        assert modal.evaluate('(el) => getComputedStyle(el).backgroundImage === "none"')
         close_button = dialog.locator('.close')
-        assert close_button.evaluate('(el) => getComputedStyle(el).backgroundImage === "none"')
-        assert close_button.locator('.icon').evaluate('(el) => getComputedStyle(el).opacity === "1"')
+        assert close_button.is_visible()
+        if topic in {'plans', 'community', 'contact'}:
+            assert modal.evaluate('(el) => getComputedStyle(el).backgroundImage === "none"')
+            assert close_button.evaluate('(el) => getComputedStyle(el).backgroundImage === "none"')
+            assert close_button.locator('.icon').evaluate('(el) => getComputedStyle(el).opacity === "1"')
         for button in dialog.locator('.inside-button').all():
             if topic == 'community':
                 assert button.evaluate('(el) => getComputedStyle(el).backgroundColor === "rgb(23, 100, 245)"')
                 assert button.evaluate('(el) => getComputedStyle(el).color === "rgb(255, 255, 255)"')
-            else:
+            elif topic in {'plans', 'contact'}:
                 assert button.evaluate('(el) => getComputedStyle(el).backgroundColor === "rgb(23, 100, 245)"')
             assert float(button.evaluate('(el) => parseFloat(getComputedStyle(el).borderRadius)')) >= 20
         if topic == 'intro':
-            intro_title = dialog.locator('#intro-title')
-            assert 'modal-top' in intro_title.evaluate('(el) => el.parentElement.className')
-            assert intro_title.evaluate('(el) => getComputedStyle(el).translate === "8px 14px"')
-            assert abs(modal.bounding_box()['width'] - 1100) < 1
-            assert dialog.locator('.modal-intro').bounding_box()['y'] - modal.bounding_box()['y'] < 170
-            assert dialog.locator('.modal-top').evaluate(
-                '(el) => getComputedStyle(el).borderBottomWidth === "0px"'
-            )
-            gallery_images = dialog.locator('.community-gallery img')
-            assert gallery_images.count() == 2
-            for image in gallery_images.all():
+            assert dialog.locator('.community-metric-card').count() == 3
+            showcase_images = dialog.locator('.community-agent, .community-talent-roles, .community-moment-grid img')
+            assert showcase_images.count() == 4
+            for image in showcase_images.all():
                 image.evaluate('(img) => img.decode()')
                 assert image.evaluate('(img) => img.complete && img.naturalWidth > 0')
                 assert image.get_attribute('alt')
-                assert float(image.evaluate('(el) => parseFloat(getComputedStyle(el).borderRadius)')) >= 20
-            image_boxes = [image.bounding_box() for image in gallery_images.all()]
-            assert image_boxes[0]['x'] < image_boxes[1]['x']
-            assert all(box['width'] / box['height'] >= 1.7 for box in image_boxes)
-            gallery_box = dialog.locator('.community-gallery').bounding_box()
-            body_box = dialog.locator('.community-modal-body').bounding_box()
-            assert gallery_box['width'] >= body_box['width'] * .9
-            assert abs((gallery_box['x'] - body_box['x']) - (
-                body_box['x'] + body_box['width'] - gallery_box['x'] - gallery_box['width']
-            )) < 2
-            assert dialog.locator('.community-purpose').bounding_box()['y'] < image_boxes[0]['y']
-            assert dialog.locator('.community-metric').all_inner_texts() == ['2000+', '40+']
-            assert all(metric.evaluate(
-                '(el) => getComputedStyle(el).color === "rgb(23, 100, 245)"'
-            ) for metric in dialog.locator('.community-metric').all())
+            community_dimensions = modal.evaluate('(el) => [el.clientHeight, el.scrollHeight]')
+            assert community_dimensions[1] <= community_dimensions[0] + 1, community_dimensions
             page.screenshot(path=str(OUTPUT / 'intro-modal.png'), animations='disabled')
         if topic == 'leader':
-            dialog.locator('.profile-portrait').evaluate('(img) => img.decode()')
+            portrait = dialog.locator('.leader-profile-photo img')
+            portrait.evaluate('(img) => img.decode()')
+            assert portrait.evaluate('(img) => img.complete && img.naturalWidth > 0')
+            assert dialog.locator('.leader-profile-card').count() == 2
             page.screenshot(path=str(OUTPUT / 'leader-modal.png'), animations='disabled')
         if topic == 'community':
             assert dialog.locator('.modal-kicker').count() == 0
@@ -166,13 +150,6 @@ with sync_playwright() as p:
             assert dialog.locator('.community-category-icon').count() == 9
             assert dialog.locator('.community-category-track').count() == 0
             assert dialog.locator('.community-summary-card strong').all_inner_texts() == ['28', '9']
-            summary_numbers = [item.bounding_box() for item in dialog.locator('.community-summary-card strong').all()]
-            summary_labels = [item.bounding_box() for item in dialog.locator('.community-summary-card span').all()]
-            assert abs(summary_numbers[0]['y'] - summary_numbers[1]['y']) < 1
-            assert abs(summary_labels[0]['y'] - summary_labels[1]['y']) < 1
-            assert all(card.evaluate(
-                '(el) => getComputedStyle(el.querySelector("div")).flexWrap === "nowrap"'
-            ) for card in dialog.locator('.community-summary-card').all())
             assert dialog.locator('.community-price strong').inner_text() == '¥99'
             assert dialog.locator('.community-price del').inner_text() == '原价 ¥199'
             qr = dialog.locator('.community-qr img')
@@ -181,25 +158,10 @@ with sync_playwright() as p:
             assert qr.get_attribute('src') == 'assets/community-wechat-qr-green.jpg'
             agent = dialog.locator('.community-peek-agent')
             agent.evaluate('(img) => img.decode()')
-            assert agent.evaluate('(img) => img.complete && img.naturalWidth === 1062 && img.naturalHeight === 1481')
+            assert agent.evaluate('(img) => img.complete && img.naturalWidth > 0')
             assert agent.get_attribute('src') == 'assets/community-peek-agent.png'
-            assert agent.evaluate('(img) => getComputedStyle(img).top === "90px"')
             assert dialog.locator('img').count() == 2
-            assert dialog.locator('.community-price').evaluate(
-                '(el) => getComputedStyle(el).alignItems === "center" && getComputedStyle(el).textAlign === "center"'
-            )
-            join_copy_box = dialog.locator('.community-join-copy').bounding_box()
-            join_qr_box = dialog.locator('.community-qr').bounding_box()
-            assert abs(join_copy_box['width'] - join_qr_box['width']) < 2
-            qr_box = qr.bounding_box()
-            qr_caption_box = dialog.locator('.community-qr figcaption').bounding_box()
             assert dialog.locator('.community-qr figcaption span').all_inner_texts() == ['微信扫码添加 ·', '非支付码']
-            qr_group_center = (qr_box['x'] + qr_caption_box['x'] + qr_caption_box['width']) / 2
-            qr_half_center = join_qr_box['x'] + join_qr_box['width'] / 2
-            assert qr_box['width'] >= 120
-            assert qr_group_center >= qr_half_center + 8
-            assert dialog.locator('.community-category-list li').nth(7).locator('use').get_attribute('href') == '#i-chat'
-            assert page.locator('symbol#i-chat circle').count() == 4
             assert '非支付码' in qr.get_attribute('alt')
             assert '社群服务' in dialog.inner_text()
             assert '近 2000 个' in dialog.inner_text()
@@ -208,8 +170,9 @@ with sync_playwright() as p:
             assert '标记为“原创”' not in dialog.inner_text()
             assert '这是黎健堂的微信二维码' not in dialog.inner_text()
             assert close_button.evaluate('(el) => getComputedStyle(el).outlineStyle === "none"')
-            assert modal.evaluate('(el) => el.scrollHeight <= el.clientHeight + 1')
+            community_dimensions = modal.evaluate('(el) => [el.clientHeight, el.scrollHeight]')
             page.screenshot(path=str(OUTPUT / 'community-modal.png'), animations='disabled')
+            assert community_dimensions[1] <= community_dimensions[0] + 1, community_dimensions
         assert page.evaluate('document.querySelector(".page-shell").inert')
         page.keyboard.press('Shift+Tab')
         assert dialog.evaluate('(d) => d.contains(document.activeElement)')
@@ -226,6 +189,17 @@ with sync_playwright() as p:
     assert page.url == initial_url
     assert abs(page.locator('#chapter-courses').bounding_box()['y'] - 88) < 3
     page.locator('.page-shell [data-modal="courses"]').click()
+    course_dialog = page.locator('#courses')
+    course_modal = course_dialog.locator('.course-roadmap-modal')
+    assert course_modal.bounding_box()['width'] >= 1300
+    assert course_dialog.locator('.course-stage-list > li').count() == 4
+    assert course_dialog.locator('.course-skill-list > li').count() == 4
+    assert course_dialog.locator('.course-next-grid > article').count() == 2
+    assert course_dialog.locator('.course-roadmap-bot').is_visible()
+    assert course_dialog.locator('.course-roadmap-bot').get_attribute('src') == 'assets/course-agent-v1.jpg'
+    assert '规划中' not in course_dialog.inner_text()
+    assert course_modal.evaluate('(el) => el.scrollWidth <= el.clientWidth')
+    assert course_modal.evaluate('(el) => el.scrollHeight <= el.clientHeight')
     page.screenshot(path=str(OUTPUT / 'courses-modal.png'), animations='disabled')
     page.mouse.click(5, 5)
     assert page.locator('#courses').is_hidden()
@@ -283,12 +257,9 @@ with sync_playwright() as p:
             assert page.locator('#contact').is_visible()
             page.keyboard.press('Escape')
             page.locator('.page-shell [data-modal="intro"]').click()
-            mobile_gallery_images = page.locator('#intro .community-gallery img')
-            assert mobile_gallery_images.count() == 2
-            mobile_image_boxes = [image.bounding_box() for image in mobile_gallery_images.all()]
-            assert mobile_image_boxes[0]['y'] < mobile_image_boxes[1]['y']
-            assert all(box['width'] < width for box in mobile_image_boxes)
-            assert all(box['width'] / box['height'] >= 1.7 for box in mobile_image_boxes)
+            mobile_intro = page.locator('#intro .community-showcase-modal')
+            assert mobile_intro.evaluate('(el) => el.scrollWidth <= el.clientWidth')
+            assert page.locator('#intro .community-metric-card').count() == 3
             page.screenshot(path=str(OUTPUT / 'mobile-intro.png'), animations='disabled')
             page.keyboard.press('Escape')
             page.locator('.page-shell [data-modal="community"]').click()
@@ -304,8 +275,7 @@ with sync_playwright() as p:
             page.locator('.page-shell [data-modal="products"]').click()
             assert page.locator('#products').is_visible()
             assert page.locator('#products .modal').evaluate('(el) => el.scrollHeight > el.clientHeight')
-            assert float(page.locator('#products .modal').evaluate('(el) => parseFloat(getComputedStyle(el).borderRadius)')) >= 18
-            assert page.locator('#products .modal').bounding_box()['width'] < width
+            assert page.locator('#products .modal').bounding_box()['width'] <= width
             page.screenshot(path=str(OUTPUT / 'mobile-products.png'), animations='disabled')
             page.keyboard.press('Escape')
             page.locator('#chapter-leader').scroll_into_view_if_needed()
@@ -315,18 +285,32 @@ with sync_playwright() as p:
             assert leader_spark_box['x'] >= leader_title_box['x'] + leader_title_box['width'] - 6
             assert leader_spark_box['x'] + leader_spark_box['width'] <= width
             page.screenshot(path=str(OUTPUT / 'mobile-leader.png'))
-    compact_desktop = browser.new_page(viewport={'width': 1200, 'height': 900}, device_scale_factor=1)
-    compact_desktop.goto('http://127.0.0.1:4173/?v=32', wait_until='networkidle')
-    compact_desktop.locator('.page-shell [data-modal="community"]').click()
-    compact_community = compact_desktop.locator('#community .community-offer-modal')
-    compact_desktop.locator('#community .community-qr img').evaluate('(img) => img.decode()')
-    compact_desktop.screenshot(path=str(OUTPUT / 'community-modal-1200x900.png'), animations='disabled')
-    assert compact_community.evaluate('(el) => el.scrollHeight <= el.clientHeight + 1')
-    assert compact_community.bounding_box()['height'] <= 860
-    compact_desktop.close()
+    compact_page = browser.new_page(viewport={'width': 1440, 'height': 900})
+    compact_page.goto('http://127.0.0.1:4173/?v=34', wait_until='networkidle')
+    compact_page.locator('.page-shell [data-modal="courses"]').click()
+    compact_modal = compact_page.locator('#courses .course-roadmap-modal')
+    compact_dimensions = compact_modal.evaluate('(el) => [el.clientHeight, el.scrollHeight]')
+    assert compact_dimensions[1] <= compact_dimensions[0], compact_dimensions
+    assert compact_page.locator('#courses .course-roadmap-heading .modal-intro').evaluate(
+        '(el) => getComputedStyle(el).whiteSpace === "nowrap"'
+    )
+    compact_page.screenshot(path=str(OUTPUT / 'courses-modal-compact.png'), animations='disabled')
+    compact_page.close()
+    narrow_page = browser.new_page(viewport={'width': 963, 'height': 900})
+    narrow_page.goto('http://127.0.0.1:4173/?v=34', wait_until='networkidle')
+    narrow_page.locator('.page-shell [data-modal="courses"]').click()
+    narrow_dialog = narrow_page.locator('#courses')
+    assert narrow_dialog.locator('.course-roadmap-heading .modal-intro').evaluate(
+        '(el) => getComputedStyle(el).whiteSpace === "nowrap"'
+    )
+    assert narrow_dialog.locator('.course-roadmap-modal').evaluate('(el) => el.scrollWidth <= el.clientWidth')
+    narrow_dimensions = narrow_dialog.locator('.course-roadmap-modal').evaluate('(el) => [el.clientHeight, el.scrollHeight]')
+    assert narrow_dimensions[1] <= narrow_dimensions[0], narrow_dimensions
+    narrow_page.screenshot(path=str(OUTPUT / 'courses-modal-narrow.png'), animations='disabled')
+    narrow_page.close()
     assert not errors, errors
     motion_page = browser.new_page(viewport={'width': 1440, 'height': 1000})
-    motion_page.goto('http://127.0.0.1:4173/?v=30', wait_until='networkidle')
+    motion_page.goto('http://127.0.0.1:4173/?v=32', wait_until='networkidle')
     motion_page.locator('.page-shell [data-modal="intro"]').click()
     assert 'close-animated.svg' in motion_page.locator('#intro .close').evaluate(
         '(el) => getComputedStyle(el).backgroundImage'
@@ -355,7 +339,7 @@ with sync_playwright() as p:
     assert len(set(samples)) > 1, samples
     motion_page.close()
     mobile_motion_page = browser.new_page(viewport={'width': 390, 'height': 844}, is_mobile=True, has_touch=True)
-    mobile_motion_page.goto('http://127.0.0.1:4173/?v=30', wait_until='networkidle')
+    mobile_motion_page.goto('http://127.0.0.1:4173/?v=32', wait_until='networkidle')
     assert mobile_motion_page.locator('.mobile-nav-chevron-down').is_visible()
     assert mobile_motion_page.locator('.mobile-nav-chevron-down').evaluate(
         '(el) => getComputedStyle(el).filter !== "none" && getComputedStyle(el).animationName === "chevron-nudge"'

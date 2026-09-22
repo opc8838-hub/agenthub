@@ -18,6 +18,37 @@
   let mobileNavOpen = false;
   const focusable = 'button:not([disabled]), input, textarea, select, a[href], [tabindex="0"]';
 
+  document.querySelectorAll('.product-video').forEach(video => {
+    video.addEventListener('playing', () => {
+      video.closest('.product-media')?.classList.add('is-playing');
+    });
+  });
+
+  function startProductVideos(dialog) {
+    if (dialog?.id !== 'products') return;
+    dialog.querySelectorAll('.product-video').forEach(video => {
+      const source = video.querySelector('source[data-src]');
+      if (source && !source.src) {
+        source.src = source.dataset.src;
+        video.load();
+      }
+      video.muted = true;
+      const playback = video.play();
+      if (playback) playback.catch(() => {});
+    });
+  }
+
+  function stopProductVideos(dialog, reset = false) {
+    if (dialog?.id !== 'products') return;
+    dialog.querySelectorAll('.product-video').forEach(video => {
+      video.pause();
+      if (reset) {
+        video.currentTime = 0;
+        video.closest('.product-media')?.classList.remove('is-playing');
+      }
+    });
+  }
+
   function setMobileNav(open, restoreFocus = false) {
     if (!mobileNavToggle || !mobileTopicMenu || mobileNavOpen === open) return;
     mobileNavOpen = open;
@@ -28,6 +59,7 @@
 
   function close() {
     if (!active) return;
+    stopProductVideos(active, true);
     active.hidden = true;
     active = null;
     page.inert = false;
@@ -39,14 +71,24 @@
     const next = dialogs.find(dialog => dialog.id === id);
     if (!next) return;
     if (!active) opener = trigger;
-    if (active) active.hidden = true;
+    if (active) {
+      stopProductVideos(active);
+      active.hidden = true;
+    }
     active = next;
     active.hidden = false;
     active.querySelector('.modal').scrollTop = 0;
     document.body.classList.add('modal-open');
     active.querySelector('.close').focus({ preventScroll: true });
     page.inert = true;
+    requestAnimationFrame(() => startProductVideos(active));
   }
+
+  document.addEventListener('visibilitychange', () => {
+    if (active?.id !== 'products') return;
+    if (document.hidden) stopProductVideos(active);
+    else startProductVideos(active);
+  });
 
   document.addEventListener('click', event => {
     const mobileToggle = event.target.closest('.mobile-nav-toggle');
