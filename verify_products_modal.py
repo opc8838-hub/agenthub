@@ -7,6 +7,9 @@ from playwright.sync_api import sync_playwright
 ROOT = Path(__file__).resolve().parent
 OUTPUT = ROOT / "output" / "playwright"
 OUTPUT.mkdir(parents=True, exist_ok=True)
+TODAY_VIDEO = ROOT / "assets" / "products" / "todayonearth-web.mp4"
+assert TODAY_VIDEO.exists()
+assert TODAY_VIDEO.stat().st_size < 1_000_000
 
 with sync_playwright() as playwright:
     browser = playwright.chromium.launch(headless=True)
@@ -29,6 +32,11 @@ with sync_playwright() as playwright:
     assert videos.evaluate_all(
         "videos => videos.every(video => getComputedStyle(video).pointerEvents === 'none')"
     )
+    assert dialog.locator('.product-showcase-card[href*="today-on-earth"] source').get_attribute(
+        "data-src"
+    ) == "assets/products/todayonearth-web.mp4"
+    assert dialog.locator('.product-showcase-card[href="https://hely.fun"] h3').inner_text() == "hely.fun"
+    assert dialog.locator('.product-showcase-card[href*="cardbot"] h3').inner_text() == "CardBot"
     assert modal.evaluate("el => el.scrollWidth <= el.clientWidth")
     assert dialog.locator(".products-service-panel").is_visible()
 
@@ -102,6 +110,10 @@ with sync_playwright() as playwright:
     mobile.wait_for_function(
         """() => [...document.querySelectorAll('#products .product-media:has(.product-video)')]
         .every(media => media.classList.contains('is-playing'))""",
+        timeout=15000,
+    )
+    mobile.wait_for_function(
+        """() => document.querySelector('#products a[href*="today-on-earth"] video').currentTime > .5""",
         timeout=15000,
     )
     assert mobile_dialog.locator(".products-gallery").evaluate(
