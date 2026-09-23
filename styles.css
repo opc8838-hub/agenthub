@@ -3470,7 +3470,7 @@ body{background:var(--paper);color:var(--ink);font-weight:450}
   #consulting.modal-layer{padding:14px 24px}
   #consulting .consulting-service-modal{
     width:min(1308px,100%);
-    height:calc(100dvh - 28px);
+    height:calc(100dvh - 72px);
   }
   #consulting .consulting-close{top:15px;right:16px;width:52px;height:52px}
   .consulting-service-body{
@@ -3486,7 +3486,7 @@ body{background:var(--paper);color:var(--ink);font-weight:450}
     height:320px;
     padding:0 56px 0 10px;
   }
-  .consulting-service-heading{padding:0;translate:12px 0}
+  .consulting-service-heading{padding:0;translate:28px 0;transform:scale(1.1);transform-origin:left center}
   .consulting-service-heading h2{width:300px;font-size:62px;line-height:1.12;translate:18px 0}
   .consulting-title-mark{width:300px;height:24px;margin:0 0 0 2px;translate:18px 0}
   .consulting-service-heading p{font-size:20px;line-height:1.45}
