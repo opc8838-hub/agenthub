@@ -51,10 +51,10 @@ with sync_playwright() as playwright:
 
     mobile_close = mobile.locator("#intro .close")
     close_style = mobile_close.evaluate("el => { const s = getComputedStyle(el); return { backgroundImage: s.backgroundImage, backgroundColor: s.backgroundColor, boxShadow: s.boxShadow } }")
-    assert close_style["backgroundImage"] == "none"
+    assert "close-animated.svg" in close_style["backgroundImage"]
     assert close_style["backgroundColor"] in ("rgba(0, 0, 0, 0)", "transparent")
     assert close_style["boxShadow"] == "none"
-    assert mobile_close.locator(".icon").evaluate("el => getComputedStyle(el).opacity") == "1"
+    assert mobile_close.locator(".icon").evaluate("el => getComputedStyle(el).opacity") == "0"
     mobile.screenshot(path=str(ROOT / "output" / "playwright" / "mobile-intro-scroll-close.png"), animations="disabled")
 
     mobile_close.click()
@@ -64,12 +64,29 @@ with sync_playwright() as playwright:
         current_close = mobile.locator(f"#{modal_id} .close")
         assert current_modal.evaluate("el => getComputedStyle(el).overflowY") == "auto"
         current_style = current_close.evaluate("el => { const s = getComputedStyle(el); return { backgroundImage: s.backgroundImage, backgroundColor: s.backgroundColor, boxShadow: s.boxShadow } }")
-        assert current_style["backgroundImage"] == "none", modal_id
+        assert "close-animated.svg" in current_style["backgroundImage"], modal_id
         assert current_style["backgroundColor"] in ("rgba(0, 0, 0, 0)", "transparent"), modal_id
         assert current_style["boxShadow"] == "none", modal_id
-        assert current_close.locator(".icon").evaluate("el => getComputedStyle(el).opacity") == "1", modal_id
+        assert current_close.locator(".icon").evaluate("el => getComputedStyle(el).opacity") == "0", modal_id
+        if modal_id == "courses":
+            title_box = mobile.locator("#courses-title").bounding_box()
+            button_box = mobile.locator("#courses .course-consult-button").bounding_box()
+            assert title_box and button_box
+            title_center = title_box["y"] + title_box["height"] / 2
+            button_center = button_box["y"] + button_box["height"] / 2
+            assert abs(title_center - button_center) < 12, (title_box, button_box)
+            mobile.wait_for_timeout(900)
+            mobile.screenshot(path=str(ROOT / "output" / "playwright" / "mobile-course-consult-close.png"))
         current_close.click()
     mobile.close()
 
+    reduced = browser.new_page(viewport={"width": 390, "height": 844}, is_mobile=True, reduced_motion="reduce")
+    reduced.goto("http://127.0.0.1:4173/?reduced-motion-close=1", wait_until="networkidle")
+    reduced.locator('.chapter-community [data-modal="intro"]').click()
+    reduced_close = reduced.locator("#intro .close")
+    assert reduced_close.evaluate("el => getComputedStyle(el).backgroundImage") == "none"
+    assert reduced_close.locator(".icon").evaluate("el => getComputedStyle(el).opacity") == "1"
+    reduced.close()
+
     browser.close()
-    print("PASS: community modal scrolls on mobile and mobile close controls stay transparent")
+    print("PASS: community modal scrolls on mobile and animated close controls stay transparent")
