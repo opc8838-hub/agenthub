@@ -3878,3 +3878,18 @@ html{
 @media(prefers-reduced-motion:reduce){
   html{scroll-snap-type:y proximity}
 }
+
+/* Desktop wheel paging is handled directly in app.js; keep the page response crisp. */
+@media(min-width:901px){
+  html{scroll-behavior:auto}
+  .motion-ready .chapter .chapter-copy,
+  .motion-ready .chapter .chapter-visual{transition-duration:180ms!important;transition-delay:0ms!important}
+  .motion-ready .chapter .chapter-detail,
+  .motion-ready .chapter .leader-name,
+  .motion-ready .chapter .hero-facts,
+  .motion-ready .chapter .community-tags,
+  .motion-ready .chapter .service-grid,
+  .motion-ready .chapter .chapter-action{transition-duration:160ms!important;transition-delay:0ms!important}
+  .motion-ready .chapter .type-char{opacity:1!important;animation:none!important}
+  .motion-ready .chapter .action-label::after{transition-delay:0ms!important}
+}

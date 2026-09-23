@@ -241,7 +241,48 @@
   }, null)?.section;
   requestAnimationFrame(() => activateChapter(initialChapter || chapters[0]));
   window.addEventListener('touchmove', () => setMobileNav(false), { passive: true });
-  window.addEventListener('wheel', () => setMobileNav(false), { passive: true });
+
+  // On desktop, one wheel gesture advances exactly one chapter. Native wheel
+  // momentum plus mandatory snap made the previous transition feel delayed.
+  let wheelLocked = false;
+  window.addEventListener('wheel', event => {
+    setMobileNav(false);
+    if (innerWidth < 901 || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || Math.abs(event.deltaY) < 12) return;
+    if (active || mobileNavOpen) return;
+
+    const direction = event.deltaY > 0 ? 1 : -1;
+    let element = event.target instanceof Element ? event.target : null;
+    while (element && element !== document.body) {
+      const overflowY = getComputedStyle(element).overflowY;
+      if ((overflowY === 'auto' || overflowY === 'scroll') && element.scrollHeight > element.clientHeight + 1) {
+        const canScroll = direction > 0
+          ? element.scrollTop + element.clientHeight < element.scrollHeight - 1
+          : element.scrollTop > 0;
+        if (canScroll) return;
+      }
+      element = element.parentElement;
+    }
+
+    event.preventDefault();
+    if (wheelLocked) return;
+
+    const footer = document.querySelector('.footer');
+    const pages = footer ? [...chapters, footer] : chapters;
+    const headerHeight = document.querySelector('.masthead')?.offsetHeight || 0;
+    const scrollTopFor = page => page === footer
+      ? Math.max(0, page.offsetTop + page.offsetHeight - innerHeight)
+      : Math.max(0, page.getBoundingClientRect().top + scrollY - headerHeight);
+    const currentIndex = pages.reduce((nearestIndex, page, index) => {
+      const distance = Math.abs(scrollTopFor(page) - scrollY);
+      return index === 0 || distance < Math.abs(scrollTopFor(pages[nearestIndex]) - scrollY) ? index : nearestIndex;
+    }, 0);
+    const nextPage = pages[currentIndex + direction];
+    if (!nextPage) return;
+
+    wheelLocked = true;
+    window.scrollTo({ top: scrollTopFor(nextPage), behavior: 'instant' });
+    window.setTimeout(() => { wheelLocked = false; }, 340);
+  }, { passive: false });
   matchMedia('(min-width: 601px)').addEventListener('change', event => {
     if (event.matches) setMobileNav(false);
   });
