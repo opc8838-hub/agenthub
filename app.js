@@ -205,15 +205,10 @@
   }
 
   if (!reducedMotion) {
-    const compactTyping = innerWidth >= 901;
     chapters.forEach(section => {
-      const titleCount = prepareTypewriter(
-        section.querySelector('.chapter-title'),
-        compactTyping ? 60 : 100,
-        compactTyping ? 22 : 38
-      );
-      const leadDelay = compactTyping ? Math.min(260, 80 + titleCount * 14) : Math.min(560, 160 + titleCount * 34);
-      prepareTypewriter(section.querySelector('.chapter-lead'), leadDelay, compactTyping ? 5 : 15);
+      const titleCount = prepareTypewriter(section.querySelector('.chapter-title'), 100, 38);
+      const leadDelay = Math.min(560, 160 + titleCount * 34);
+      prepareTypewriter(section.querySelector('.chapter-lead'), leadDelay, 15);
     });
     page.classList.add('motion-ready');
   }
