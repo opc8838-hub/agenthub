@@ -3890,6 +3890,6 @@ html{
   .motion-ready .chapter .community-tags,
   .motion-ready .chapter .service-grid,
   .motion-ready .chapter .chapter-action{transition-duration:160ms!important;transition-delay:0ms!important}
-  .motion-ready .chapter .type-char{opacity:1!important;animation:none!important}
+  .motion-ready .chapter .type-char{animation-duration:110ms!important}
   .motion-ready .chapter .action-label::after{transition-delay:0ms!important}
 }
