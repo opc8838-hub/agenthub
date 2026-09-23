@@ -3658,6 +3658,206 @@ body{background:var(--paper);color:var(--ink);font-weight:450}
     left:calc(50% - 31px);
   }
   #courses .course-skill-list>li>div{width:100%;text-align:center}
-  #courses .course-skill-list strong,
-  #courses .course-skill-list p{text-align:center}
+#courses .course-skill-list strong,
+#courses .course-skill-list p{text-align:center}
+}
+
+/* Contact modal — single-screen layout based on the supplied reference. */
+#contact.modal-layer{
+  padding:clamp(18px,3.8vh,40px) clamp(20px,3.8vw,58px);
+  background:rgb(44 53 68 / .28);
+  backdrop-filter:blur(13px) saturate(.82);
+}
+#contact .contact-modal{
+  position:relative;
+  width:min(1420px,100%);
+  height:min(900px,calc(100dvh - clamp(36px,7.6vh,80px)));
+  max-height:none;
+  overflow:hidden;
+  border:1px solid #e5eaf1;
+  border-radius:30px;
+  background:#fdfefe;
+  box-shadow:0 30px 90px rgb(17 24 39 / .2);
+}
+#contact .contact-close{
+  position:absolute;
+  z-index:3;
+  top:28px;
+  right:30px;
+  width:56px;
+  height:56px;
+}
+#contact .contact-modal-body{
+  display:grid;
+  grid-template-rows:auto 1px minmax(0,1fr);
+  gap:clamp(20px,2.3vh,27px);
+  height:100%;
+  padding:clamp(66px,8.5vh,91px) clamp(38px,4.4vw,66px) clamp(38px,5.5vh,58px);
+}
+#contact .contact-heading h2{
+  margin:0;
+  color:#11141c;
+  font-size:clamp(48px,5.5vw,76px);
+  font-weight:850;
+  line-height:1.2;
+  letter-spacing:-.045em;
+}
+#contact .contact-heading p{
+  margin:18px 0 0;
+  color:#5b6471;
+  font-size:clamp(17px,1.8vw,24px);
+  font-weight:500;
+  line-height:1.65;
+}
+#contact .contact-divider{height:1px;background:#dfe4eb}
+#contact .contact-options{
+  display:grid;
+  grid-template-columns:minmax(0,1.3fr) minmax(360px,.9fr);
+  gap:26px;
+  min-height:0;
+}
+#contact .contact-card{
+  min-width:0;
+  min-height:0;
+  border:1px solid #e5ebf4;
+  border-radius:20px;
+  background:#f2f6fc;
+}
+#contact .contact-wechat-card{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(210px,.78fr);
+  grid-template-rows:auto auto auto 1fr;
+  align-content:center;
+  align-items:center;
+  column-gap:16px;
+  padding:30px 34px 25px;
+  background:#f0f1f5;
+}
+#contact .contact-card h3{
+  margin:0;
+  color:#11141c;
+  font-size:clamp(24px,2.2vw,34px);
+  font-weight:800;
+  line-height:1.35;
+}
+#contact .contact-wechat-card h3{grid-column:1;grid-row:1;white-space:nowrap}
+#contact .contact-wechat-id{
+  grid-column:1;
+  grid-row:2;
+  margin:20px 0 22px;
+  color:#111318;
+  font-family:Inter,Arial,sans-serif;
+  font-size:clamp(38px,4vw,62px);
+  font-weight:750;
+  letter-spacing:-.035em;
+  line-height:1.15;
+  white-space:nowrap;
+}
+#contact .copy-wechat{
+  grid-column:1;
+  grid-row:3;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:18px;
+  width:min(100%,318px);
+  min-height:68px;
+  padding:14px 24px;
+  border:0;
+  border-radius:999px;
+  background:#1764f5;
+  color:#fff;
+  font-size:clamp(18px,1.65vw,24px);
+  font-weight:750;
+  box-shadow:0 12px 24px rgb(23 100 245 / .16);
+}
+#contact .copy-wechat:hover{background:#0f55d6}
+#contact .copy-wechat .icon{width:25px;height:25px}
+#contact .contact-note{
+  grid-column:1;
+  grid-row:4;
+  align-self:end;
+  margin:18px 0 0;
+  color:#566170;
+  font-size:clamp(15px,1.3vw,19px);
+  line-height:1.55;
+}
+#contact .contact-agent{
+  grid-column:2;
+  grid-row:1/5;
+  align-self:center;
+  justify-self:center;
+  display:block;
+  width:100%;
+  max-width:310px;
+  max-height:100%;
+  object-fit:contain;
+  border-radius:14px;
+  background:#f0f1f5;
+}
+#contact .contact-preparation-card{padding:34px 36px}
+#contact .contact-info-list{
+  display:grid;
+  gap:clamp(15px,2vh,24px);
+  margin:24px 0 0;
+  padding:0;
+  list-style:none;
+}
+#contact .contact-info-list li{display:grid;grid-template-columns:46px minmax(0,1fr);align-items:center;gap:20px}
+#contact .contact-info-list li>span{
+  display:grid;
+  width:44px;
+  height:44px;
+  place-items:center;
+  border-radius:50%;
+  background:#e1edff;
+  color:#1764f5;
+  font-size:24px;
+  font-weight:800;
+}
+#contact .contact-info-list p{margin:0;color:#596371;font-size:clamp(17px,1.45vw,22px);line-height:1.5}
+
+@media(max-width:1000px) and (min-width:601px){
+  #contact .contact-modal-body{padding:76px 34px 34px;gap:18px}
+  #contact .contact-heading h2{font-size:clamp(46px,6vw,62px)}
+  #contact .contact-options{grid-template-columns:minmax(0,1.1fr) minmax(300px,.9fr);gap:16px}
+  #contact .contact-wechat-card{grid-template-columns:minmax(0,1fr) 150px;padding:24px 22px;column-gap:8px}
+  #contact .contact-agent{max-width:170px}
+  #contact .contact-wechat-card h3{font-size:22px}
+  #contact .contact-wechat-id{font-size:clamp(30px,4vw,42px)}
+  #contact .copy-wechat{min-height:54px;padding:10px 16px;font-size:18px}
+  #contact .contact-preparation-card{padding:27px 23px}
+  #contact .contact-info-list{gap:clamp(14px,2vh,20px);margin-top:20px}
+  #contact .contact-info-list li{grid-template-columns:38px 1fr;gap:12px}
+  #contact .contact-info-list li>span{width:36px;height:36px;font-size:20px}
+}
+
+@media(max-width:600px){
+  #contact.modal-layer{padding:0}
+  #contact .contact-modal{width:100%;height:100dvh;border:0;border-radius:0;overflow-y:auto}
+  #contact .contact-close{top:12px;right:12px;width:52px;height:52px}
+  #contact .contact-modal-body{display:block;min-height:100%;height:auto;padding:79px 19px 26px}
+  #contact .contact-heading h2{font-size:clamp(36px,9.4vw,44px);line-height:1.18;letter-spacing:-.035em}
+  #contact .contact-heading p{margin-top:13px;font-size:16px;line-height:1.62}
+  #contact .contact-divider{margin:19px 0 15px}
+  #contact .contact-options{grid-template-columns:1fr;gap:12px}
+  #contact .contact-card{border-radius:16px}
+  #contact .contact-wechat-card{
+    grid-template-columns:minmax(0,1fr) 104px;
+    grid-template-rows:auto auto auto;
+    column-gap:7px;
+    padding:18px 14px 14px;
+  }
+  #contact .contact-wechat-card h3{font-size:20px}
+  #contact .contact-wechat-id{margin:12px 0 14px;font-size:clamp(27px,7.3vw,32px)}
+  #contact .copy-wechat{width:100%;min-height:48px;gap:9px;padding:9px 10px;font-size:16px}
+  #contact .copy-wechat .icon{width:20px;height:20px}
+  #contact .contact-note{grid-column:1/-1;grid-row:4;margin:12px 0 0;font-size:14px}
+  #contact .contact-agent{grid-column:2;grid-row:1/4;width:104px;max-height:148px;border-radius:10px}
+  #contact .contact-preparation-card{padding:18px 17px}
+  #contact .contact-preparation-card h3{font-size:22px}
+  #contact .contact-info-list{gap:12px;margin-top:15px}
+  #contact .contact-info-list li{grid-template-columns:32px minmax(0,1fr);gap:12px}
+  #contact .contact-info-list li>span{width:31px;height:31px;font-size:18px}
+  #contact .contact-info-list p{font-size:16px;line-height:1.4}
 }
