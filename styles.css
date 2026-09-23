@@ -3635,3 +3635,29 @@ body{background:var(--paper);color:var(--ink);font-weight:450}
   backdrop-filter:none;
 }
 .modal-layer .close:focus-visible{outline:2px solid #1764f5;outline-offset:2px}
+
+/* Center the full Agent × WorkBuddy learning block on phones. */
+@media(max-width:560px){
+  #courses .course-core-card{text-align:center}
+  #courses .course-core-heading{align-items:center;text-align:center}
+  #courses .course-core-heading h3{width:100%;text-align:center}
+  #courses .course-core-heading>span{align-self:center;text-align:center}
+  #courses .course-skill-list>li,
+  #courses .course-skill-list>li+li,
+  #courses .course-skill-list>li:nth-child(3){
+    grid-template-columns:minmax(0,1fr);
+    justify-items:center;
+    gap:9px;
+    padding:14px 8px;
+    text-align:center;
+  }
+  #courses .course-skill-list .course-skill-number,
+  #courses .course-skill-list>li+li .course-skill-number,
+  #courses .course-skill-list>li:nth-child(3) .course-skill-number{
+    top:18px;
+    left:calc(50% - 31px);
+  }
+  #courses .course-skill-list>li>div{width:100%;text-align:center}
+  #courses .course-skill-list strong,
+  #courses .course-skill-list p{text-align:center}
+}
