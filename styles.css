@@ -3857,3 +3857,24 @@ body{background:var(--paper);color:var(--ink);font-weight:450}
   background:transparent!important;
   border-radius:0!important;
 }
+
+/* Full-screen chapter snapping keeps each homepage section aligned below the sticky header. */
+html{
+  scroll-snap-type:y mandatory;
+}
+.chapter{
+  scroll-snap-align:start;
+  scroll-snap-stop:always;
+}
+.chapter-community .chapter-title{
+  letter-spacing:.025em;
+  line-height:1.24;
+}
+@media(max-width:900px){
+  /* Mobile chapters contain stacked content, so keep natural reading scroll and snap gently. */
+  html{scroll-snap-type:y proximity}
+  .chapter{scroll-snap-stop:normal}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-snap-type:y proximity}
+}
