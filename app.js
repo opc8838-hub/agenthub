@@ -229,9 +229,9 @@
 
   if (!reducedMotion) {
     chapters.forEach(section => {
-      const titleCount = prepareTypewriter(section.querySelector('.chapter-title'), 100, 38);
-      const leadDelay = Math.min(560, 160 + titleCount * 34);
-      prepareTypewriter(section.querySelector('.chapter-lead'), leadDelay, 15);
+      const titleCount = prepareTypewriter(section.querySelector('.chapter-title'), 100, 44);
+      const leadDelay = Math.min(600, 160 + titleCount * 38);
+      prepareTypewriter(section.querySelector('.chapter-lead'), leadDelay, 17);
     });
     page.classList.add('motion-ready');
   }

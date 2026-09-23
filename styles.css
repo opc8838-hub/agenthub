@@ -3461,7 +3461,7 @@ body{background:var(--paper);color:var(--ink);font-weight:450}
   #consulting .consulting-close{top:15px;right:16px;width:52px;height:52px}
   .consulting-service-body{
     display:grid;
-    grid-template-rows:268px minmax(0,1fr) 68px;
+    grid-template-rows:320px minmax(0,1fr) 68px;
     gap:13px;
     height:100%;
     min-height:0;
@@ -3469,7 +3469,7 @@ body{background:var(--paper);color:var(--ink);font-weight:450}
   }
   .consulting-service-hero{
     min-height:0;
-    height:268px;
+    height:320px;
     padding:0 56px 0 10px;
   }
   .consulting-service-heading{padding:0;translate:12px 0}
@@ -3479,7 +3479,7 @@ body{background:var(--paper);color:var(--ink);font-weight:450}
   .consulting-service-art img{left:72px;top:-43px;width:580px}
   .consulting-option-grid{min-height:0;gap:20px;margin:0}
   .consulting-option-card{min-height:0;height:100%;padding:17px 24px 14px}
-  .consulting-option-card>header{grid-template-columns:62px minmax(0,1fr);gap:15px;min-height:105px}
+  .consulting-option-card>header{grid-template-columns:62px minmax(0,1fr);gap:15px;min-height:150px}
   .consulting-option-icon{width:58px;height:58px}
   .consulting-bulb-icon svg{width:36px;height:36px}
   .consulting-code-icon svg{width:37px;height:37px}
