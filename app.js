@@ -239,7 +239,8 @@
       }
       const leadDelay = Math.min(600, 160 + titleCount * 38);
       const leadCount = prepareTypewriter(section.querySelector('.chapter-lead'), leadDelay, 17);
-      const actionLineDelay = Math.max(760, leadDelay + Math.max(0, leadCount - 1) * 17 + 270);
+      const leadFinish = leadCount > 0 ? leadDelay + (leadCount - 1) * 17 + 150 : 0;
+      const actionLineDelay = leadCount > 0 ? leadFinish + 35 : 180;
       section.style.setProperty('--action-line-delay', `${actionLineDelay}ms`);
     });
     page.classList.add('motion-ready');
