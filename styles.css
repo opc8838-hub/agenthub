@@ -3892,3 +3892,4 @@ html{
   .motion-ready .chapter .chapter-action{transition-duration:160ms!important;transition-delay:0ms!important}
   .motion-ready .chapter .action-label::after{transition-delay:0ms!important}
 }
+html.is-wheel-paging{scroll-snap-type:none!important;scroll-behavior:auto!important}

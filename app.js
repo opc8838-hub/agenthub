@@ -183,6 +183,29 @@
   const chapters = [...document.querySelectorAll('.chapter')];
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  function pageScrollTo(top) {
+    if (reducedMotion) {
+      window.scrollTo({ top, behavior: 'instant' });
+      return;
+    }
+    const start = window.scrollY;
+    const distance = top - start;
+    const startedAt = performance.now();
+    const duration = 360;
+    document.documentElement.classList.add('is-wheel-paging');
+    function frame(now) {
+      const progress = Math.min(1, (now - startedAt) / duration);
+      const eased = 1 - Math.pow(1 - progress, 2.3);
+      window.scrollTo({ top: start + distance * eased, behavior: 'instant' });
+      if (progress < 1) requestAnimationFrame(frame);
+      else {
+        window.scrollTo({ top, behavior: 'instant' });
+        requestAnimationFrame(() => document.documentElement.classList.remove('is-wheel-paging'));
+      }
+    }
+    requestAnimationFrame(frame);
+  }
+
   function prepareTypewriter(element, startDelay, step) {
     if (!element) return 0;
     const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
@@ -280,8 +303,8 @@
     if (!nextPage) return;
 
     wheelLocked = true;
-    window.scrollTo({ top: scrollTopFor(nextPage), behavior: 'instant' });
-    window.setTimeout(() => { wheelLocked = false; }, 340);
+    pageScrollTo(scrollTopFor(nextPage));
+    window.setTimeout(() => { wheelLocked = false; }, 500);
   }, { passive: false });
   matchMedia('(min-width: 601px)').addEventListener('change', event => {
     if (event.matches) setMobileNav(false);
