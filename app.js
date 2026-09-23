@@ -229,7 +229,14 @@
 
   if (!reducedMotion) {
     chapters.forEach(section => {
-      const titleCount = prepareTypewriter(section.querySelector('.chapter-title'), 100, 44);
+      const titleStart = 100;
+      const titleStep = 44;
+      const titleCount = prepareTypewriter(section.querySelector('.chapter-title'), titleStart, titleStep);
+      const titleUnderline = section.querySelector('.product-title-underline path');
+      if (titleUnderline) {
+        const titleFinish = titleStart + (titleCount - 1) * titleStep + 150;
+        titleUnderline.style.setProperty('--underline-delay', `${titleFinish}ms`);
+      }
       const leadDelay = Math.min(600, 160 + titleCount * 38);
       prepareTypewriter(section.querySelector('.chapter-lead'), leadDelay, 17);
     });

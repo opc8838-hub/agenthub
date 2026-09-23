@@ -317,7 +317,7 @@ body{background:var(--paper);color:var(--ink);font-weight:450}
   scale:0 1;
   transform-origin:left center;
   animation:doodle-line-nudge .42s steps(1,end) infinite;
-  transition:scale .45s cubic-bezier(.32,.72,0,1);
+  transition:scale .65s cubic-bezier(.32,.72,0,1);
 }
 .site-nav button:hover,.site-nav button[aria-current="true"]{color:var(--blue)}
 .site-nav button:hover::after,.site-nav button[aria-current="true"]::after{scale:1 1}
@@ -506,6 +506,11 @@ body{background:var(--paper);color:var(--ink);font-weight:450}
   overflow:visible;
 }
 .product-title-underline path{fill:none;stroke:url(#product-underline-gradient);stroke-width:7;stroke-linecap:round;stroke-linejoin:round}
+.motion-ready .chapter-products .product-title-underline path{stroke-dasharray:1;stroke-dashoffset:1}
+.motion-ready .chapter-products.is-active .product-title-underline path{
+  animation:product-title-underline-draw 720ms cubic-bezier(.23,1,.32,1) var(--underline-delay,0ms) both;
+}
+@keyframes product-title-underline-draw{to{stroke-dashoffset:0}}
 
 @media(min-width:901px){
   .chapter-community .chapter-inner,
