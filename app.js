@@ -238,7 +238,9 @@
         titleUnderline.style.setProperty('--underline-delay', `${titleFinish}ms`);
       }
       const leadDelay = Math.min(600, 160 + titleCount * 38);
-      prepareTypewriter(section.querySelector('.chapter-lead'), leadDelay, 17);
+      const leadCount = prepareTypewriter(section.querySelector('.chapter-lead'), leadDelay, 17);
+      const actionLineDelay = Math.max(760, leadDelay + Math.max(0, leadCount - 1) * 17 + 270);
+      section.style.setProperty('--action-line-delay', `${actionLineDelay}ms`);
     });
     page.classList.add('motion-ready');
   }
