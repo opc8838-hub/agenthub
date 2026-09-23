@@ -39,6 +39,10 @@ with sync_playwright() as playwright:
     assert dialog.locator('.product-showcase-card[href*="cardbot"] h3').inner_text() == "CardBot"
     assert modal.evaluate("el => el.scrollWidth <= el.clientWidth")
     assert dialog.locator(".products-service-panel").is_visible()
+    close = dialog.locator(".products-close")
+    assert "close-animated.svg?v=2" in close.evaluate("el => getComputedStyle(el).backgroundImage")
+    assert close.evaluate("el => getComputedStyle(el).backgroundColor === 'rgba(0, 0, 0, 0)'")
+    assert close.evaluate("el => getComputedStyle(el).boxShadow === 'none'")
 
     desktop.wait_for_function(
         """() => [...document.querySelectorAll('#products .product-video')]

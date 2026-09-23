@@ -17,7 +17,7 @@ assert COMMUNITY_QR_ASSET.exists()
 close_svg = CLOSE_ASSET.read_text(encoding='utf-8')
 assert 'stroke: #2b2a33' in close_svg
 assert 'baseFrequency="0.055"' in close_svg
-assert 'scale="4"' in close_svg
+assert 'scale="5"' in close_svg
 assert 'dur="0.64s"' in close_svg
 assert 'animation:draw 0.70s' in close_svg
 

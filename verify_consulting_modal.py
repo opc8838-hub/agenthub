@@ -45,8 +45,9 @@ with sync_playwright() as playwright:
         'el => getComputedStyle(el).opacity === "0"'
     )
     assert close_button.evaluate(
-        'el => getComputedStyle(el).backgroundColor === "rgb(245, 247, 250)"'
+        'el => getComputedStyle(el).backgroundColor === "rgba(0, 0, 0, 0)"'
     )
+    assert close_button.evaluate('el => getComputedStyle(el).boxShadow === "none"')
     desktop.wait_for_timeout(800)
     desktop.screenshot(
         path=str(OUTPUT / "consulting-modal-desktop.png"), animations="disabled"

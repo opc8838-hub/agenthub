@@ -1162,7 +1162,7 @@ body{background:var(--paper);color:var(--ink);font-weight:450}
   border:0;
   border-radius:50%;
   color:#2b2a33;
-  background:transparent url('assets/close-animated.svg') center/contain no-repeat;
+  background:transparent url('assets/close-animated.svg?v=2') center/contain no-repeat;
   transition:transform .2s cubic-bezier(.25,1,.5,1),background-color .2s ease;
 }
 .close .icon{width:24px;height:24px;opacity:0}
@@ -3513,7 +3513,7 @@ body{background:var(--paper);color:var(--ink);font-weight:450}
     outline:0;
     color:#111827;
     background-color:transparent!important;
-    background-image:url('assets/close-animated.svg')!important;
+    background-image:url('assets/close-animated.svg?v=2')!important;
     background-position:center;
     background-size:contain;
     background-repeat:no-repeat;
@@ -3623,3 +3623,15 @@ body{background:var(--paper);color:var(--ink);font-weight:450}
   .modal-layer .close:focus-visible{background-image:none!important}
   .modal-layer .close .icon{opacity:1}
 }
+
+/* Keep the animated close art on a genuinely transparent surface at every width. */
+.modal-layer .close,
+.modal-layer .close:hover,
+.modal-layer .close:active,
+.modal-layer .close:focus,
+.modal-layer .close:focus-visible{
+  background-color:transparent!important;
+  box-shadow:none!important;
+  backdrop-filter:none;
+}
+.modal-layer .close:focus-visible{outline:2px solid #1764f5;outline-offset:2px}
