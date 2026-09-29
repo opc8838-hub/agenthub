@@ -297,7 +297,7 @@
   let wheelLocked = false;
   window.addEventListener('wheel', event => {
     setMobileNav(false);
-    if (innerWidth < 901 || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || Math.abs(event.deltaY) < 12) return;
+    if (innerWidth < 601 || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || event.deltaY === 0) return;
     if (active || mobileNavOpen) return;
 
     const direction = event.deltaY > 0 ? 1 : -1;
