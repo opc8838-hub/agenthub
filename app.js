@@ -130,10 +130,7 @@
         const top = scrollButton.hasAttribute('data-home')
           ? 0
           : target.getBoundingClientRect().top + window.scrollY - headerHeight;
-        window.scrollTo({
-          top,
-          behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'
-        });
+        pageScrollTo(top);
       }
       return;
     }
@@ -145,10 +142,7 @@
       if (target) {
         const headerHeight = document.querySelector('.masthead')?.offsetHeight || 0;
         const top = target.getBoundingClientRect().top + window.scrollY - headerHeight;
-        window.scrollTo({
-          top,
-          behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'
-        });
+        pageScrollTo(top);
       }
       return;
     }
@@ -199,6 +193,27 @@
 
   const chapters = [...document.querySelectorAll('.chapter')];
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function fitMobileChapters() {
+    if (innerWidth <= 600) {
+      const headerHeight = document.querySelector('.masthead')?.offsetHeight || 0;
+      document.documentElement.style.setProperty('--mobile-header-height', `${headerHeight}px`);
+    }
+    chapters.forEach(chapter => {
+      const inner = chapter.querySelector('.chapter-inner');
+      if (!inner) return;
+      if (innerWidth > 600) {
+        inner.style.removeProperty('--mobile-slide-scale');
+        return;
+      }
+      const available = chapter.clientHeight - 4;
+      const natural = inner.scrollHeight;
+      inner.style.setProperty('--mobile-slide-scale', String(Math.min(1, available / natural)));
+    });
+  }
+  requestAnimationFrame(fitMobileChapters);
+  document.fonts.ready.then(fitMobileChapters);
+  window.addEventListener('resize', fitMobileChapters);
 
   function pageScrollTo(top) {
     if (reducedMotion) {
@@ -296,9 +311,28 @@
   // momentum plus mandatory snap made the previous transition feel delayed.
   let wheelLocked = false;
   const wheelPagingViewport = matchMedia('(min-width: 601px) and (any-hover: hover) and (any-pointer: fine)');
+  function advancePage(direction) {
+    if (wheelLocked) return;
+    const footer = document.querySelector('.footer');
+    const pages = innerWidth <= 600 || !footer ? chapters : [...chapters, footer];
+    const headerHeight = document.querySelector('.masthead')?.offsetHeight || 0;
+    const scrollTopFor = page => page === footer
+      ? Math.max(0, page.offsetTop + page.offsetHeight - innerHeight)
+      : Math.max(0, page.getBoundingClientRect().top + scrollY - headerHeight);
+    const currentIndex = pages.reduce((nearestIndex, page, index) => {
+      const distance = Math.abs(scrollTopFor(page) - scrollY);
+      return index === 0 || distance < Math.abs(scrollTopFor(pages[nearestIndex]) - scrollY) ? index : nearestIndex;
+    }, 0);
+    const nextPage = pages[currentIndex + direction];
+    if (!nextPage) return;
+
+    wheelLocked = true;
+    pageScrollTo(scrollTopFor(nextPage));
+    window.setTimeout(() => { wheelLocked = false; }, 500);
+  }
   window.addEventListener('wheel', event => {
     setMobileNav(false);
-    if (!wheelPagingViewport.matches || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || event.deltaY === 0) return;
+    if ((!wheelPagingViewport.matches && innerWidth > 600) || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || event.deltaY === 0) return;
     if (active || mobileNavOpen) return;
 
     const direction = event.deltaY > 0 ? 1 : -1;
@@ -315,25 +349,26 @@
     }
 
     event.preventDefault();
-    if (wheelLocked) return;
-
-    const footer = document.querySelector('.footer');
-    const pages = footer ? [...chapters, footer] : chapters;
-    const headerHeight = document.querySelector('.masthead')?.offsetHeight || 0;
-    const scrollTopFor = page => page === footer
-      ? Math.max(0, page.offsetTop + page.offsetHeight - innerHeight)
-      : Math.max(0, page.getBoundingClientRect().top + scrollY - headerHeight);
-    const currentIndex = pages.reduce((nearestIndex, page, index) => {
-      const distance = Math.abs(scrollTopFor(page) - scrollY);
-      return index === 0 || distance < Math.abs(scrollTopFor(pages[nearestIndex]) - scrollY) ? index : nearestIndex;
-    }, 0);
-    const nextPage = pages[currentIndex + direction];
-    if (!nextPage) return;
-
-    wheelLocked = true;
-    pageScrollTo(scrollTopFor(nextPage));
-    window.setTimeout(() => { wheelLocked = false; }, 500);
+    advancePage(direction);
   }, { passive: false });
+
+  let touchStart = null;
+  page.addEventListener('touchstart', event => {
+    if (innerWidth > 600 || active || event.touches.length !== 1 || event.target.closest('.mobile-floating-nav')) return;
+    touchStart = { x: event.touches[0].clientX, y: event.touches[0].clientY };
+  }, { passive: true });
+  page.addEventListener('touchmove', event => {
+    if (touchStart && innerWidth <= 600 && !active) event.preventDefault();
+  }, { passive: false });
+  page.addEventListener('touchend', event => {
+    if (!touchStart || innerWidth > 600 || active) return;
+    const deltaX = event.changedTouches[0].clientX - touchStart.x;
+    const deltaY = event.changedTouches[0].clientY - touchStart.y;
+    touchStart = null;
+    if (Math.abs(deltaY) < 45 || Math.abs(deltaY) < Math.abs(deltaX) * 1.2) return;
+    advancePage(deltaY < 0 ? 1 : -1);
+  }, { passive: true });
+  page.addEventListener('touchcancel', () => { touchStart = null; }, { passive: true });
   matchMedia('(min-width: 601px)').addEventListener('change', event => {
     if (event.matches) setMobileNav(false);
   });

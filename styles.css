@@ -3906,6 +3906,17 @@ html.is-wheel-paging{scroll-snap-type:none!important;scroll-behavior:auto!import
   html::-webkit-scrollbar{display:none}
 }
 
+@media (max-width:600px){
+  html{overflow-y:hidden;scrollbar-gutter:auto;scroll-snap-type:none!important}
+  html::-webkit-scrollbar{display:none}
+  main > .chapter{height:calc(100dvh - var(--mobile-header-height,var(--header)));min-height:0;overflow:hidden}
+  main > .chapter > .chapter-inner{
+    transform:scale(var(--mobile-slide-scale,1));
+    transform-origin:center top;
+  }
+  main > .footer{display:none}
+}
+
 /* A clearer community-learning invitation below the hero facts. */
 .community-join-cta{
   display:flex;
