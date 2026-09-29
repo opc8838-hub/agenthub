@@ -295,9 +295,10 @@
   // On desktop, one wheel gesture advances exactly one chapter. Native wheel
   // momentum plus mandatory snap made the previous transition feel delayed.
   let wheelLocked = false;
+  const wheelPagingViewport = matchMedia('(min-width: 601px) and (any-hover: hover) and (any-pointer: fine)');
   window.addEventListener('wheel', event => {
     setMobileNav(false);
-    if (innerWidth < 601 || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || event.deltaY === 0) return;
+    if (!wheelPagingViewport.matches || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || event.deltaY === 0) return;
     if (active || mobileNavOpen) return;
 
     const direction = event.deltaY > 0 ? 1 : -1;

@@ -3899,6 +3899,13 @@ html{
 }
 html.is-wheel-paging{scroll-snap-type:none!important;scroll-behavior:auto!important}
 
+/* Desktop chapters behave like slides: wheel input changes pages, and the
+   document can still be positioned by navigation buttons without a scrollbar. */
+@media (min-width:601px) and (any-hover:hover) and (any-pointer:fine){
+  html{overflow-y:hidden;scrollbar-gutter:auto;scroll-snap-type:none!important}
+  html::-webkit-scrollbar{display:none}
+}
+
 /* A clearer community-learning invitation below the hero facts. */
 .community-join-cta{
   display:flex;
