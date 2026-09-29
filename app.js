@@ -127,6 +127,23 @@
       const target = document.getElementById(scrollButton.dataset.scroll);
       if (target) {
         const headerHeight = document.querySelector('.masthead')?.offsetHeight || 0;
+        const top = scrollButton.hasAttribute('data-home')
+          ? 0
+          : target.getBoundingClientRect().top + window.scrollY - headerHeight;
+        window.scrollTo({
+          top,
+          behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'
+        });
+      }
+      return;
+    }
+    const leaderTrigger = event.target.closest('[data-modal="contact"]');
+    if (leaderTrigger && leaderTrigger.textContent.includes('负责人')) {
+      setMobileNav(false);
+      close();
+      const target = document.getElementById('chapter-leader');
+      if (target) {
+        const headerHeight = document.querySelector('.masthead')?.offsetHeight || 0;
         const top = target.getBoundingClientRect().top + window.scrollY - headerHeight;
         window.scrollTo({
           top,

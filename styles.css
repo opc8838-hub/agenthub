@@ -1293,20 +1293,13 @@ body{background:var(--paper);color:var(--ink);font-weight:450}
 .community-peek-agent{position:absolute;z-index:3;top:90px;right:12px;width:126px;height:176px;object-fit:contain;mix-blend-mode:multiply;pointer-events:none;user-select:none}
 .community-offer-body{display:flex;flex-direction:column;gap:14px;padding:0 42px 24px}
 .community-offer-intro{max-width:790px;margin:0;font-size:1.05rem;line-height:1.55;color:oklch(42% .055 265)}
-.community-offer-summary{display:grid;grid-template-columns:1fr 1fr 1.2fr;gap:14px;padding-right:90px}
-.community-summary-card,.community-price{min-height:92px;border:1px solid oklch(88% .035 260);border-radius:12px;background:oklch(99% .006 265)}
-.community-summary-card{display:flex;align-items:center;justify-content:center;gap:13px;padding:14px 16px}
-.community-summary-icon{flex:none;width:42px;height:42px;fill:none;color:var(--blue);stroke:currentColor;stroke-width:2.35;stroke-linecap:round;stroke-linejoin:round}
-.community-summary-card>div{display:flex;align-items:baseline;justify-content:center;gap:9px;min-width:0;flex-wrap:nowrap}
-.community-summary-card strong{font:780 2.65rem/1 Inter,CommunityCN,sans-serif;color:var(--blue);font-variant-numeric:tabular-nums}
-.community-summary-card span{font-size:.84rem;font-weight:650;color:oklch(42% .05 265);white-space:nowrap}
-.community-price{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:10px 18px;text-align:center;background:oklch(98% .018 260)}
-.community-price>span{font-size:.94rem;font-weight:760;color:oklch(19% .02 265)}
-.community-price>div{display:flex;align-items:baseline;justify-content:center;gap:12px}
-.community-price strong{font:800 2.35rem/1 Inter,CommunityCN,sans-serif;color:var(--blue)}
-.community-price strong small{font-size:1.2rem}
-.community-price del{font-size:.85rem;font-weight:650;color:oklch(55% .025 265)}
-.community-price p{margin:0;font-size:.82rem;color:oklch(42% .04 265)}
+.community-offer-summary{display:grid;grid-template-columns:1.2fr 1fr;gap:18px;padding-right:90px}
+.community-summary-card{min-height:122px;border:1px solid oklch(85% .055 260);border-radius:14px;background:oklch(99% .006 265)}
+.community-summary-card{display:flex;align-items:center;justify-content:flex-start;gap:24px;padding:18px 28px}
+.community-summary-icon{box-sizing:content-box;flex:none;width:52px;height:52px;padding:14px;border-radius:16px;background:oklch(96% .025 260);fill:none;color:var(--blue);stroke:currentColor;stroke-width:2.35;stroke-linecap:round;stroke-linejoin:round}
+.community-summary-card>div{display:flex;flex-direction:column;align-items:flex-start;gap:3px;min-width:0}
+.community-summary-card strong{font:780 2.9rem/1 Inter,CommunityCN,sans-serif;color:var(--blue);font-variant-numeric:tabular-nums}
+.community-summary-card span{font-size:1rem;font-weight:650;color:oklch(18% .025 265);white-space:nowrap}
 .community-catalog,.community-services{padding-top:13px;border-top:1px solid oklch(88% .025 265)}
 .community-section-heading{display:flex;align-items:center;gap:12px;margin-bottom:10px}
 .community-section-heading::before,.community-service-list h3::before,.community-join-copy>h3:first-child::before{content:'';display:inline-block;flex:none;width:7px;height:24px;border-radius:999px;background:var(--blue)}
@@ -1353,7 +1346,7 @@ body{background:var(--paper);color:var(--ink);font-weight:450}
   .community-offer-body{gap:9px;padding-bottom:14px}
   .community-offer-intro{line-height:1.4}
   .community-peek-agent{top:82px;right:8px;width:118px;height:164px}
-  .community-summary-card,.community-price{min-height:84px}
+  .community-summary-card{min-height:104px}
   .community-catalog,.community-services{padding-top:8px}
   .community-section-heading{margin-bottom:6px}
   .community-category-list{gap:7px 12px}
@@ -1366,7 +1359,6 @@ body{background:var(--paper);color:var(--ink);font-weight:450}
   .community-offer-modal{overflow-y:auto}
   .community-peek-agent{display:none}
   .community-offer-summary{grid-template-columns:repeat(2,minmax(0,1fr));padding-right:0}
-  .community-price{grid-column:1/-1;padding-right:18px}
   .community-category-list{grid-template-columns:repeat(2,minmax(0,1fr))}
   .community-services{grid-template-columns:1fr}
   .community-service-list{padding-right:0;border-right:0}
@@ -1378,8 +1370,7 @@ body{background:var(--paper);color:var(--ink);font-weight:450}
   .community-offer-body{gap:22px;padding:8px 24px 36px}
   .community-offer-intro{font-size:1rem}
   .community-offer-summary,.community-category-list,.community-services,.community-join{grid-template-columns:1fr}
-  .community-summary-card,.community-price{min-height:96px}
-  .community-price{grid-column:auto}
+  .community-summary-card{min-height:96px}
   .community-category-list li{min-height:72px}
   .community-services ul{grid-template-columns:1fr}
   .community-image-service{grid-template-columns:40px 1fr}
@@ -3907,3 +3898,130 @@ html{
   .motion-ready .chapter .action-label::after{transition-delay:var(--action-line-delay,760ms)!important}
 }
 html.is-wheel-paging{scroll-snap-type:none!important;scroll-behavior:auto!important}
+
+/* A clearer community-learning invitation below the hero facts. */
+.community-join-cta{
+  display:flex;
+  align-items:center;
+  margin-top:25px;
+}
+.chapter-community .community-join-cta .chapter-action{margin-top:0}
+@media(max-width:600px){
+  .community-join-cta{margin-top:16px}
+}
+
+/* Keep the peek illustration clear of the summary-card outline. */
+.community-peek-agent{right:-12px}
+.community-image-service .tag-list .tag{
+  border:1px solid transparent;
+  color:oklch(31% .045 45);
+}
+.community-image-service .tag-list .tag:nth-child(1){
+  border-color:oklch(86% .09 65);
+  background:oklch(96% .045 78);
+  color:oklch(38% .09 48);
+}
+.community-image-service .tag-list .tag:nth-child(2){
+  border-color:oklch(84% .09 150);
+  background:oklch(96% .045 150);
+  color:oklch(35% .09 150);
+}
+.community-image-service .tag-list .tag:nth-child(3){
+  border-color:oklch(84% .08 315);
+  background:oklch(96% .04 315);
+  color:oklch(37% .08 315);
+}
+
+/* Phone-only persistent chapter rail; desktop navigation stays untouched. */
+.mobile-contact-link,
+.mobile-floating-nav{display:none}
+@media(max-width:600px){
+  .mobile-contact-link{
+    min-width:0;
+    min-height:44px;
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    gap:5px;
+    padding:7px 0 7px 10px;
+    color:var(--ink);
+    font-size:16px;
+    font-weight:760;
+    white-space:nowrap;
+  }
+  .mobile-contact-link:active{color:var(--blue)}
+  .mobile-contact-link .mobile-nav-chevron{
+    width:27px;
+    height:27px;
+    flex:0 0 27px;
+    overflow:visible;
+    filter:url(#chevron-boil);
+    animation:chevron-nudge .32s steps(1,end) infinite;
+  }
+  .mobile-topic-menu{display:none!important}
+  .mobile-floating-nav{
+    position:fixed;
+    z-index:35;
+    top:50%;
+    right:max(8px,env(safe-area-inset-right));
+    display:flex;
+    width:66px;
+    max-height:calc(100dvh - 148px);
+    flex-direction:column;
+    align-items:stretch;
+    overflow-y:auto;
+    overscroll-behavior:contain;
+    scrollbar-width:none;
+    padding:7px 6px;
+    transform:translateY(-50%);
+    border:1px solid rgb(28 87 201 / .08);
+    border-radius:28px;
+    background:rgb(255 255 255 / .94);
+    box-shadow:0 10px 30px rgb(27 48 90 / .10),0 2px 8px rgb(27 48 90 / .05);
+    backdrop-filter:blur(16px) saturate(1.08);
+    -webkit-backdrop-filter:blur(16px) saturate(1.08);
+  }
+  .mobile-floating-nav::-webkit-scrollbar{display:none}
+  .mobile-floating-nav button{
+    position:relative;
+    display:flex;
+    min-width:0;
+    min-height:51px;
+    flex:0 0 51px;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:3px;
+    padding:5px 1px 4px;
+    color:var(--ink);
+    font-family:"Microsoft YaHei UI","Microsoft YaHei","PingFang SC",CommunityCN,sans-serif;
+    font-size:11px;
+    font-weight:680;
+    line-height:1.15;
+    white-space:nowrap;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .mobile-floating-nav button:not(:last-child)::after{
+    content:"";
+    position:absolute;
+    right:5px;
+    bottom:0;
+    left:5px;
+    height:1px;
+    background:rgb(25 33 50 / .08);
+  }
+  .mobile-floating-nav svg{
+    display:block;
+    width:25px;
+    height:25px;
+    fill:none;
+    stroke:#315ddd;
+    stroke-width:2.2;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+    transition:transform .2s ease,color .2s ease;
+  }
+  .mobile-floating-nav button:active svg{transform:scale(.9);color:#6b55e8}
+  .mobile-floating-nav button:focus-visible,
+  .mobile-contact-link:focus-visible{outline:2px solid #315ddd;outline-offset:2px;border-radius:12px}
+}

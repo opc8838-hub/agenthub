@@ -6,12 +6,14 @@
 <meta name="description" content="碳基社区扎根东莞，连接 AI 人才与实体企业，了解进厂计划、企客松、Agent 实战课程、产品开发和一对一辅导">
 <title>碳基社区 · AI 实战与智能体计划</title>
 <link rel="preload" href="assets/community-cn.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="styles.css?v=71">
-<script defer src="app.js?v=40"></script>
+  <link rel="stylesheet" href="styles.css?v=75">
+  <link rel="stylesheet" href="mobile-icons.css?v=11">
+<script defer src="app.js?v=41"></script>
 </head>
 <body>
 <svg class="svg-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 <defs>
+<filter id="mobile-icon-thin" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB"><feMorphology in="SourceGraphic" operator="erode" radius="0.38"/></filter>
 <filter id="doodle-boil" x="-30%" y="-30%" width="160%" height="160%">
   <feTurbulence type="fractalNoise" baseFrequency="0.055" numOctaves="2" seed="1" result="noise"><animate attributeName="seed" values="1;2;3;4;5;6" dur="0.42s" repeatCount="indefinite" calcMode="discrete"/></feTurbulence>
   <feDisplacementMap in="SourceGraphic" in2="noise" scale="5.2" xChannelSelector="R" yChannelSelector="G"/>
@@ -56,7 +58,7 @@
 <div class="page-shell">
 <header class="masthead">
   <div class="nav-inner">
-    <button class="brand" data-scroll="chapter-community" type="button" aria-label="回到碳基社区 Agent"><svg class="icon brand-chip" aria-hidden="true"><use href="#i-chip"/></svg><span>碳基社区</span></button>
+    <button class="brand" data-scroll="chapter-community" data-home type="button" aria-label="回到首页"><svg class="icon brand-chip" aria-hidden="true"><use href="#i-chip"/></svg><span>碳基社区</span></button>
     <nav class="site-nav" aria-label="主题导航">
       <button type="button" data-scroll="chapter-community">碳基社区 Agent</button>
       <button type="button" data-scroll="chapter-programs">长期计划</button>
@@ -67,23 +69,50 @@
       <button type="button" data-scroll="chapter-consulting">咨询服务</button>
       <button type="button" data-modal="contact" class="nav-contact">联系 <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button>
     </nav>
-    <button class="mobile-nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-topic-menu">
-      <span class="mobile-current-topic">社区介绍</span>
-      <svg class="mobile-nav-chevron mobile-nav-chevron-down" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-chevron-down"/></svg>
-      <svg class="mobile-nav-chevron mobile-nav-chevron-up" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-chevron-up"/></svg>
+    <button class="mobile-contact-link" type="button" data-modal="contact" aria-label="联系并查看微信方式">
+      <span>联系</span>
+      <svg class="mobile-nav-chevron" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-chevron-down"/></svg>
     </button>
-    <nav class="mobile-topic-menu" id="mobile-topic-menu" aria-label="手机主题导航" hidden>
-      <button type="button" data-scroll="chapter-community">社区介绍</button>
-      <button type="button" data-scroll="chapter-programs">长期计划</button>
-      <button type="button" data-scroll="chapter-leader">负责人</button>
-      <button type="button" data-scroll="chapter-courses">成长课程</button>
-      <button type="button" data-scroll="chapter-social">实战社群</button>
-      <button type="button" data-scroll="chapter-products">开发定制</button>
-      <button type="button" data-scroll="chapter-consulting">咨询服务</button>
-      <button type="button" data-modal="contact">联系</button>
-    </nav>
   </div>
 </header>
+<nav class="mobile-floating-nav" aria-label="手机快捷导航">
+  <button type="button" data-scroll="chapter-programs" aria-label="进厂赛事，前往长期计划">
+    <svg class="mobile-reference-icon" viewBox="0 0 32 32" aria-hidden="true"><path d="M8 3.5h16v10a8 8 0 0 1-16 0Z"/><path d="M8 6H4.5A1.5 1.5 0 0 0 3 7.5V11a6 6 0 0 0 6 6m15-11h3.5A1.5 1.5 0 0 1 29 7.5V11a6 6 0 0 1-6 6M16 21.5V29m-6 0h12"/></svg>
+    <img class="mobile-rail-icon" src="assets/mobile-nav-icons/进厂赛事.svg" alt="">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.04813 13.4061L10.5831 16.9421L9.1703 18.3558L10.5849 19.7711L9.17064 21.1853L6.69614 18.71L3.86734 21.5388L2.45312 20.1246L5.28192 17.2958L2.80668 14.8213L4.22089 13.4071L5.63477 14.8202L7.04813 13.4061ZM2.99907 3L6.54506 3.00335L18.3624 14.8207L19.7772 13.4071L21.1915 14.8213L18.7166 17.2962L21.545 20.1246L20.1308 21.5388L17.3024 18.7104L14.8275 21.1853L13.4133 19.7711L14.8269 18.3562L3.00181 6.53118L2.99907 3ZM17.4563 3.0001L20.9991 3.00335L21.001 6.52648L16.9481 10.5781L13.4121 7.0431L17.4563 3.0001Z"/></svg>
+    <span>进厂赛事</span>
+  </button>
+  <button type="button" data-scroll="chapter-leader" aria-label="负责人，前往负责人介绍">
+    <svg class="mobile-reference-icon" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="9" r="6"/><path d="M5 28v-1a11 11 0 0 1 22 0v1Z"/></svg>
+    <img class="mobile-rail-icon" src="assets/mobile-nav-icons/负责人.svg" alt="">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 22C4 17.5817 7.58172 14 12 14C16.4183 14 20 17.5817 20 22H18C18 18.6863 15.3137 16 12 16C8.68629 16 6 18.6863 6 22H4ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13ZM12 11C14.21 11 16 9.21 16 7C16 4.79 14.21 3 12 3C9.79 3 8 4.79 8 7C8 9.21 9.79 11 12 11Z"/></svg>
+    <span>负责人</span>
+  </button>
+  <button type="button" data-scroll="chapter-courses" aria-label="课程，前往课程页面">
+    <svg class="mobile-reference-icon" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 7c-3-3-8-3.5-13-2.5a1 1 0 0 0-.8 1V25a1 1 0 0 0 1.2 1c5-1 9-.5 12.6 2 3.6-2.5 7.6-3 12.6-2a1 1 0 0 0 1.2-1V5.5a1 1 0 0 0-.8-1C24 3.5 19 4 16 7Zm0 0v21"/></svg>
+    <img class="mobile-rail-icon" src="assets/mobile-nav-icons/课程.svg" alt="">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.3428 1.99996C13.1216 2.62563 13 3.29855 13 3.99996C13 7.31368 15.6863 9.99997 19 9.99997C19.7014 9.99997 20.3743 9.8784 21 9.6572V21C21 21.5523 20.5523 22 20 22H6.5C4.567 22 3 20.433 3 18.5V4.99997C3.00003 3.34313 4.34316 1.99996 6 1.99996H13.3428ZM6.5 17C5.67159 17 5.00003 17.6716 5 18.5C5 19.3284 5.67157 20 6.5 20H19V17H6.5ZM18.5293 0.329292C18.7059 -0.0964932 19.2942 -0.096505 19.4707 0.329292L19.7236 0.940621C20.1556 1.98342 20.9616 2.81613 21.9746 3.2668L22.6924 3.58613C23.1026 3.76896 23.1026 4.36615 22.6924 4.54903L21.9326 4.88692C20.9449 5.3262 20.1534 6.12942 19.7139 7.1379L19.4668 7.70333C19.2864 8.11746 18.7137 8.11746 18.5332 7.70333L18.2871 7.1379C17.8476 6.12926 17.0552 5.32625 16.0674 4.88692L15.3076 4.54903C14.8974 4.36617 14.8974 3.76894 15.3076 3.58613L16.0254 3.2668C17.0385 2.81614 17.8445 1.98343 18.2764 0.940621L18.5293 0.329292Z"/></svg>
+    <span>课程</span>
+  </button>
+  <button type="button" data-scroll="chapter-social" aria-label="社群，前往实战社群页面">
+    <svg class="mobile-reference-icon" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="8.5" r="5.3"/><path d="M7 28v-3.5a9 9 0 0 1 18 0V28M6.3 8a4.4 4.4 0 0 0 0 8.7M25.7 8a4.4 4.4 0 0 1 0 8.7M1 27v-2.5c0-4 2.5-6.5 6.5-6.5M31 27v-2.5c0-4-2.5-6.5-6.5-6.5"/></svg>
+    <img class="mobile-rail-icon" src="assets/mobile-nav-icons/社群.svg" alt="">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 11C14.7614 11 17 13.2386 17 16V22H15V16C15 14.4023 13.7511 13.0963 12.1763 13.0051L12 13C10.4023 13 9.09634 14.2489 9.00509 15.8237L9 16V22H7V16C7 13.2386 9.23858 11 12 11ZM5.5 14C5.77885 14 6.05009 14.0326 6.3101 14.0942C6.14202 14.594 6.03873 15.122 6.00896 15.6693L6 16L6.0007 16.0856C5.88757 16.0456 5.76821 16.0187 5.64446 16.0069L5.5 16C4.7203 16 4.07955 16.5949 4.00687 17.3555L4 17.5V22H2V17.5C2 15.567 3.567 14 5.5 14ZM18.5 14C20.433 14 22 15.567 22 17.5V22H20V17.5C20 16.7203 19.4051 16.0796 18.6445 16.0069L18.5 16C18.3248 16 18.1566 16.03 18.0003 16.0852L18 16C18 15.3343 17.8916 14.694 17.6915 14.0956C17.9499 14.0326 18.2211 14 18.5 14ZM5.5 8C6.88071 8 8 9.11929 8 10.5C8 11.8807 6.88071 13 5.5 13C4.11929 13 3 11.8807 3 10.5C3 9.11929 4.11929 8 5.5 8ZM18.5 8C19.8807 8 21 9.11929 21 10.5C21 11.8807 19.8807 13 18.5 13C17.1193 13 16 11.8807 16 10.5C16 9.11929 17.1193 8 18.5 8ZM5.5 10C5.22386 10 5 10.2239 5 10.5C5 10.7761 5.22386 11 5.5 11C5.77614 11 6 10.7761 6 10.5C6 10.2239 5.77614 10 5.5 10ZM18.5 10C18.2239 10 18 10.2239 18 10.5C18 10.7761 18.2239 11 18.5 11C18.7761 11 19 10.7761 19 10.5C19 10.2239 18.7761 10 18.5 10ZM12 2C14.2091 2 16 3.79086 16 6C16 8.20914 14.2091 10 12 10C9.79086 10 8 8.20914 8 6C8 3.79086 9.79086 2 12 2ZM12 4C10.8954 4 10 4.89543 10 6C10 7.10457 10.8954 8 12 8C13.1046 8 14 7.10457 14 6C14 4.89543 13.1046 4 12 4Z"/></svg>
+    <span>社群</span>
+  </button>
+  <button type="button" data-scroll="chapter-products" aria-label="定制，前往产品与定制开发页面">
+    <svg class="mobile-reference-icon" viewBox="0 0 32 32" aria-hidden="true"><path d="m16 2 13 7.5v15L16 32 3 24.5v-15Z" transform="translate(0 -1)"/><path d="m3 8.5 13 7.5 13-7.5M16 16v15"/></svg>
+    <img class="mobile-rail-icon" src="assets/mobile-nav-icons/定制.svg" alt="">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.1416 2.81836L13.1016 3.94824L12 3.31055L4.5 7.65234V7.6582L12 12V20.6895L19.5 16.3467V11.5L21.5 10.3291V17.5L12 23L2.5 17.5V6.5L12 1L15.1416 2.81836ZM18.5293 2.31934C18.7059 1.8935 19.2943 1.89349 19.4707 2.31934L19.7236 2.93066C20.1556 3.97346 20.9615 4.80618 21.9746 5.25684L22.6924 5.57617C23.1026 5.75901 23.1026 6.3562 22.6924 6.53906L21.9326 6.87695C20.9449 7.31624 20.1534 8.11944 19.7139 9.12793L19.4668 9.69336C19.2864 10.1075 18.7137 10.1075 18.5332 9.69336L18.2871 9.12793C17.8476 8.11929 17.0552 7.31628 16.0674 6.87695L15.3076 6.53906C14.8974 6.35622 14.8974 5.75899 15.3076 5.57617L16.0254 5.25684C17.0385 4.80618 17.8445 3.97348 18.2764 2.93066L18.5293 2.31934Z"/></svg>
+    <span>定制</span>
+  </button>
+  <button type="button" data-scroll="chapter-consulting" aria-label="咨询，前往 1V1 咨询页面">
+    <svg class="mobile-reference-icon" viewBox="0 0 32 32" aria-hidden="true"><path d="M29.5 14.5c0 6.7-6 12-13.5 12-2 0-4-.4-5.8-1.1L4 29l1.3-6.2A11.4 11.4 0 0 1 2.5 15c0-6.9 6-12.3 13.5-12.3s13.5 5.2 13.5 11.8Z"/><g fill="currentColor" stroke="none"><circle cx="9.5" cy="14.5" r="1.2"/><circle cx="16" cy="14.5" r="1.2"/><circle cx="22.5" cy="14.5" r="1.2"/></g></svg>
+    <img class="mobile-rail-icon" src="assets/mobile-nav-icons/咨询.svg" alt="">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.99996C12.8632 1.99996 13.701 2.10973 14.5 2.31539L14 4.25192C13.3608 4.0874 12.6906 3.99997 12 3.99997C7.58174 3.99997 4.00002 7.58172 4 12C4 13.3344 4.3255 14.6174 4.93945 15.7656L5.28906 16.4189L4.63379 19.3662L7.58105 18.7109L8.23438 19.0605C9.38255 19.6745 10.6656 20 12 20C16.4183 20 20 16.4183 20 12C20 11.6771 19.9805 11.3587 19.9434 11.0459L21.9297 10.8095C21.976 11.1999 22 11.5972 22 12C22 17.5228 17.5228 22 12 22C10.2975 22 8.69425 21.5746 7.29102 20.8242L2 22L3.17578 16.709C2.42541 15.3057 2 13.7025 2 12C2.00002 6.47714 6.47717 1.99996 12 1.99996ZM19.5293 1.3193C19.7058 0.893513 20.2942 0.8935 20.4707 1.3193L20.7236 1.93063C21.1555 2.97343 21.9615 3.80614 22.9746 4.2568L23.6914 4.57614C24.1022 4.75882 24.1022 5.35635 23.6914 5.53903L22.9326 5.87692C21.945 6.3162 21.1534 7.11943 20.7139 8.1279L20.4668 8.69333C20.2863 9.10747 19.7136 9.10747 19.5332 8.69333L19.2861 8.1279C18.8466 8.11942 18.0551 7.11942 17.0674 5.87692L16.3076 5.53903C15.8974 5.35618 15.8974 4.75895 16.3076 4.57614L17.0254 4.2568C18.0384 3.80614 18.8445 2.97343 19.2764 1.93063L19.5293 1.3193Z"/></svg>
+    <span>咨询</span>
+  </button>
+</nav>
 <main id="main">
   <section class="chapter chapter-community" id="chapter-community" data-name="碳基社区 Agent" data-number="01" aria-labelledby="community-title">
     <div class="chapter-inner">
@@ -91,7 +120,9 @@
         <div class="chapter-title-wrap spark-left"><svg class="title-spark" aria-hidden="true"><use href="#i-doodle-spark"/></svg><h1 class="chapter-title" id="community-title">让我们从一个<br>真实问题开始</h1></div>
         <p class="chapter-lead">扎根东莞，连接 <span class="blue-text">AI 人才与实体企业</span>，<br>让创意成为产品，让技术走进业务</p>
         <div class="hero-facts"><div><strong>2000<span>+</span></strong><span>本地成员</span></div><div><strong>40<span>+</span></strong><span>AI 主题活动</span></div><div><strong class="words">全市镇街</strong><span>跨行业 · 跨年龄</span></div></div>
-        <button class="chapter-action" data-modal="intro" type="button"><span class="action-label">了解碳基社区</span><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+        <div class="community-join-cta">
+          <button class="chapter-action" data-modal="intro" type="button"><span class="action-label">进社区，学知识，拓视野</span><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+        </div>
       </div>
       <div class="chapter-visual scene-art"><img class="scene-image" src="assets/community-scene-v4.png" alt="T-agent 将创意转化为网页与代码" width="1536" height="1024" fetchpriority="high"></div>
     </div>
@@ -103,7 +134,7 @@
         <div class="chapter-title-wrap spark-left"><svg class="title-spark" aria-hidden="true"><use href="#i-doodle-spark"/></svg><h2 class="chapter-title" id="programs-title">长期计划</h2></div>
         <p class="chapter-lead">让 AI 走进企业<br><span class="blue-text">进厂计划</span><br>让 <span class="blue-text">企客松赛事</span><br>回到社区</p>
         <p class="chapter-detail">进厂计划 · 企业黑客松 · 持续连接产业需求与 AI 实践者</p>
-        <button class="chapter-action" data-modal="plans" type="button"><span class="action-label">了解两项长期计划</span><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+        <button class="chapter-action" data-modal="plans" type="button"><span class="action-label">进工厂，接业务，打比赛，磨技术</span><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button>
       </div>
       <div class="chapter-visual scene-art scene-wide"><img class="scene-image" src="assets/programs-scene-v4.png" alt="T-agent 连接企业与 AI 实践者" width="1774" height="887" loading="lazy"></div>
     </div>
@@ -350,7 +381,6 @@
         <section class="community-offer-summary" aria-label="社群与工具库概览">
           <article class="community-summary-card"><svg class="community-summary-icon" aria-hidden="true"><use href="#i-cube"/></svg><div><strong>28</strong><span>个实用 Skill 与工具</span></div></article>
           <article class="community-summary-card"><svg class="community-summary-icon" aria-hidden="true"><use href="#i-grid"/></svg><div><strong>9</strong><span>大应用分类</span></div></article>
-          <article class="community-price" aria-label="社群限时价格"><span>首批成员限时价</span><div><strong><small>¥</small>99</strong><del>原价 ¥199</del></div><p>一次加入，持续更新</p></article>
         </section>
 
         <section class="community-catalog" aria-labelledby="community-catalog-title">

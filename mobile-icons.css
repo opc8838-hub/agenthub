@@ -1,0 +1,43 @@
+.mobile-floating-nav > button > svg {
+  display: none;
+}
+
+.mobile-floating-nav > button > svg.mobile-reference-icon {
+  display: block;
+  flex: 0 0 18px;
+  width: 18px;
+  height: 18px;
+  fill: none;
+  color: #304ee8;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.mobile-floating-nav .mobile-rail-icon {
+  display: none;
+}
+
+.mobile-floating-nav > button > span {
+  color: #111318;
+}
+
+@media (max-width: 600px) {
+  .masthead .brand {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  .mobile-contact-link,
+  .site-nav .nav-contact {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  .mobile-contact-link:active {
+    color: var(--ink);
+  }
+}
