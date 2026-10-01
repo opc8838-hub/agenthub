@@ -4071,14 +4071,16 @@ html.is-wheel-paging{scroll-snap-type:none!important;scroll-behavior:auto!import
 .plans-calendar-days span{display:grid;place-items:center;width:37px;height:37px;border-radius:50%}
 .plans-calendar-days span:first-child{grid-column:3}
 .plans-date-active{background:#1474ef;color:white;box-shadow:0 3px 8px #1764e63b}.plans-calendar-days .plans-date-soft{background:#e8f1ff;color:#1769d0}
-.plans-agent{position:absolute;z-index:2;left:50%;bottom:-67px;width:240px;height:auto;transform:translateX(-50%);filter:contrast(1.26) brightness(1.1);mix-blend-mode:multiply;pointer-events:none}
+.plans-agent{position:absolute;z-index:2;left:50%;bottom:-58px;width:288px;height:auto;transform:translateX(-50%);filter:none;mix-blend-mode:normal;pointer-events:none}
 .plans-footer{display:flex;align-items:center;justify-content:space-between;gap:16px;flex:none;min-height:74px;padding:15px 0 0;border-top:1px solid #e6eaf0}
 .plans-footer p{margin:0;color:#5b6372;font-size:17px;line-height:1.45}
 .plans-contact{flex:none;min-width:170px;min-height:55px;padding:9px 25px;border:0;border-radius:999px;color:white;background:#0869f9;box-shadow:0 9px 18px #1474ef35;font-size:18px;font-weight:700}
 .plans-contact:hover{background:#075fe0}.plans-contact:focus-visible{outline:3px solid #8abaff;outline-offset:3px}
 @media(max-height:950px) and (min-width:701px){#plans .plans-modal{padding-top:26px}.plans-heading{padding-bottom:14px}.plans-heading h2{font-size:40px;margin-bottom:10px}.plans-heading p{font-size:18px}.plans-card{height:min(620px,100%);padding-top:20px}.plans-card-top{height:clamp(145px,24vh,210px)}.plans-photo{height:100%}.plans-card h3{font-size:25px;margin-bottom:16px}.plans-card-copy p{font-size:14px;line-height:1.55}.plans-tags{margin:10px 0 12px}.plans-tag{font-size:13px;padding:6px 8px}.plans-tag b{font-size:18px}.plans-calendar{padding-top:9px}.plans-calendar-days{grid-template-rows:repeat(5,minmax(24px,1fr))}.plans-calendar-days span{width:30px;height:30px}.plans-agent{width:200px;bottom:-40px}.plans-footer{min-height:64px}}
 @media(max-width:700px){#plans.modal-layer{padding:6px}#plans .plans-modal{width:100%;height:calc(100dvh - 12px);padding:15px 11px 10px;border-radius:18px}#plans .close{top:8px;right:8px;width:35px;height:35px}.plans-heading{padding:0 2px 9px}.plans-heading h2{font-size:27px;margin-bottom:10px}.plans-heading h2::after{width:27px;height:3px;bottom:-5px}.plans-heading p{font-size:11px;line-height:1.4;padding-right:22px}.plans-cards{grid-template-columns:1fr;grid-template-rows:repeat(2,minmax(0,1fr));gap:6px;margin-bottom:5px}.plans-card{padding:9px 10px 8px;border-radius:10px}.plans-card-top{height:38%;grid-template-columns:minmax(0,1fr) 38%;gap:7px}.plans-card h3{font-size:17px;margin-bottom:9px}.plans-card h3::after{width:22px;height:3px;bottom:-4px}.plans-card-copy p{font-size:10px;line-height:1.3}.plans-photo{height:100%;border-radius:6px}.plans-tags{gap:3px;margin:5px 0}.plans-tag{gap:2px;padding:3px 5px;font-size:9px}.plans-tag b{font-size:13px}.plans-calendar{padding:3px 7px 2px;border-radius:7px}.plans-calendar-head{font-size:8px}.plans-calendar-head strong{font-size:12px}.plans-calendar-days{grid-template-rows:repeat(5,minmax(11px,1fr));height:calc(100% - 18px);margin-top:2px;font-size:8px}.plans-calendar-days span{width:15px;height:15px}.plans-agent{width:25%;bottom:-22px}.plans-footer{min-height:37px;padding-top:4px;gap:6px}.plans-footer p{font-size:9px;line-height:1.25}.plans-contact{min-width:73px;min-height:28px;padding:5px 7px;font-size:10px}}
-@media(max-width:700px){.plans-calendar-head{grid-template-columns:22px repeat(7,1fr)}.plans-calendar-days{margin-left:24px}.plans-heading p{padding-right:94px}.plans-agent{display:block;top:-80px;right:44px;bottom:auto;left:auto;width:58px;transform:none}}
+@media(max-height:950px) and (min-width:701px){.plans-agent{width:240px;bottom:-46px}}
+@media(max-height:800px) and (min-width:701px){.plans-agent{width:192px;bottom:-36px}}
+@media(max-width:700px){.plans-calendar-head{grid-template-columns:22px repeat(7,1fr)}.plans-calendar-days{margin-left:24px}.plans-heading p{padding-right:118px}.plans-agent{display:block;top:-94px;right:44px;bottom:auto;left:auto;width:84px;transform:none}}
 
 /* Mobile slides: keep readable type in a dedicated lane beside the fixed rail. */
 @media(max-width:600px){
@@ -4120,27 +4122,44 @@ html.is-wheel-paging{scroll-snap-type:none!important;scroll-behavior:auto!import
   .chapter-social .community-tags span{white-space:nowrap}
   .chapter-programs .chapter-action .action-label{max-width:calc(100% - 46px)}
   .chapter-programs .program-action-group{display:inline-block;white-space:nowrap}
-  .chapter-leader .chapter-title{font-size:36px;line-height:1.18;white-space:normal}
-  .chapter-leader .leader-heading-row{display:block;white-space:nowrap}
+  .chapter-leader .chapter-title{font-size:clamp(27px,7.2vw,32px);line-height:1.25;white-space:nowrap}
+  .chapter-leader .leader-heading-row{display:inline;white-space:nowrap}
   .chapter-leader .leader-intro-phrase{display:inline-block;white-space:nowrap}
-  .chapter-leader .leader-name{font-size:31px;margin-top:13px}
-  .chapter-leader .chapter-lead{font-size:22px;margin-top:12px}
-  .chapter-leader .chapter-detail{font-size:18.7px;margin-top:12px}
-  .chapter-leader .chapter-action{font-size:18.7px;margin-top:14px}
+  .chapter-leader .leader-name{font-size:31px;line-height:1.25;margin-top:16px}
+  .chapter-leader .chapter-lead{font-size:20px;line-height:1.55;margin-top:14px}
+  .chapter-leader .chapter-detail{font-size:17px;line-height:1.55;margin-top:15px}
+  .chapter-leader .chapter-action{font-size:18.7px;margin-top:18px}
   .chapter-leader .chapter-action .icon,.chapter-products .chapter-action .icon{width:35px;height:35px}
-  .chapter-products .chapter-title{font-size:44px;line-height:1.18}
-  .chapter-products .product-heading-row{display:block}
-  .chapter-products .chapter-lead{font-size:22px;margin-top:24px}
-  .chapter-products .service-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px 12px;margin-top:16px}
+  .chapter-products .chapter-title{font-size:clamp(32px,8.8vw,40px);line-height:1.25;white-space:nowrap}
+  .chapter-products .product-heading-row{display:inline}
+  .chapter-products .chapter-lead{font-size:clamp(13px,3.55vw,16px);line-height:1.5;margin-top:23px;white-space:nowrap}
+  .chapter-products .service-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 12px;margin-top:20px}
   .chapter-products .service-grid span{min-height:46px;padding:0;border:0;gap:8px;font-size:16.5px;white-space:normal;line-height:1.3}
   .chapter-products .service-grid .icon{flex:none;width:30px;height:30px}
-  .chapter-products .chapter-action{font-size:18.7px;margin-top:16px}
-  .chapter-products .product-title-underline{bottom:-19px;height:22px}
+  .chapter-products .chapter-action{font-size:18.7px;margin-top:17px}
+  .chapter-products .product-title-underline{bottom:-13px;height:18px}
   .chapter-programs .chapter-title-wrap,
-  .chapter-leader .chapter-title-wrap{display:block;width:100%;text-align:center}
+  .chapter-leader .chapter-title-wrap{display:block;width:100%;text-align:left}
   .chapter-programs .chapter-lead,
   .chapter-leader .leader-name,
-  .chapter-leader .chapter-lead{text-align:center}
-  .chapter-programs .spark-left .title-spark{left:calc(50% - 100px)}
-  .chapter-leader .spark-right .title-spark{right:calc(50% - 95px)}
+  .chapter-leader .chapter-lead{text-align:left}
+  .chapter-programs .spark-left .title-spark{left:-13px}
+  .chapter-leader .chapter-title-wrap{width:max-content}
+  .chapter-leader .spark-right .title-spark{top:-24px;right:-32px}
+  main > .chapter.chapter-programs > .chapter-inner,
+  main > .chapter.chapter-leader > .chapter-inner.visual-first,
+  main > .chapter.chapter-products > .chapter-inner{padding-top:30px;padding-bottom:12px;gap:16px}
+  .chapter-programs .chapter-title-wrap{width:auto;text-align:left}
+  main > .chapter.chapter-programs > .chapter-inner{padding-top:34px;padding-bottom:4px;gap:8px}
+  .chapter-programs .chapter-lead{display:flex;flex-direction:column;gap:20px;margin-top:23px;line-height:1.5;text-align:left}
+  .chapter-programs .program-lead-group{display:flex;flex-direction:column;gap:8px;min-width:0}
+  .chapter-programs .program-lead-group:last-child{margin-left:0}
+  .chapter-programs .chapter-lead br,.chapter-programs .program-prefix{display:none}
+  .chapter-programs .chapter-lead .program-name{order:0;display:block;font-size:clamp(28px,7.7vw,34px);line-height:1.25;letter-spacing:0;white-space:nowrap}
+  .chapter-programs .program-context{order:1;font-size:17px;font-weight:600;line-height:1.5;white-space:nowrap;color:var(--ink)}
+  .chapter-programs .chapter-detail{margin-top:18px;line-height:1.55}
+  .chapter-programs .chapter-action{margin-top:20px;line-height:1.5}
+  main > .chapter-programs .chapter-visual.scene-art{width:calc(100% + 50px);max-width:none;align-items:center}
+  main > .chapter-programs .scene-image{max-height:100%}
+  main > .chapter-products .scene-image{max-width:96%}
 }
