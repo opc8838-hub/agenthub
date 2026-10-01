@@ -4120,7 +4120,7 @@ html.is-wheel-paging{scroll-snap-type:none!important;scroll-behavior:auto!import
   .chapter-social .community-tags{margin-top:15px;gap:7px}
   .chapter-social .community-tag-row:first-child{display:grid;grid-template-columns:max-content max-content;gap:7px}
   .chapter-social .community-tags span{white-space:nowrap}
-  .chapter-programs .chapter-action .action-label{max-width:calc(100% - 46px)}
+  .chapter-programs .chapter-action .action-label{max-width:calc(100% - 38px);white-space:nowrap;overflow-wrap:normal}
   .chapter-programs .program-action-group{display:inline-block;white-space:nowrap}
   .chapter-leader .chapter-title{font-size:clamp(27px,7.2vw,32px);line-height:1.25;white-space:nowrap}
   .chapter-leader .leader-heading-row{display:inline;white-space:nowrap}
@@ -4150,15 +4150,18 @@ html.is-wheel-paging{scroll-snap-type:none!important;scroll-behavior:auto!import
   main > .chapter.chapter-leader > .chapter-inner.visual-first,
   main > .chapter.chapter-products > .chapter-inner{padding-top:30px;padding-bottom:12px;gap:16px}
   .chapter-programs .chapter-title-wrap{width:auto;text-align:left}
-  main > .chapter.chapter-programs > .chapter-inner{padding-top:34px;padding-bottom:4px;gap:8px}
-  .chapter-programs .chapter-lead{display:flex;flex-direction:column;gap:20px;margin-top:23px;line-height:1.5;text-align:left}
+  /* Keep the reference composition proportional on narrow phones, without text autosizing. */
+  html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+  main > .chapter.chapter-programs > .chapter-inner{padding-top:clamp(29px,7.94vw,34px);padding-left:clamp(18px,5.14vw,22px);padding-bottom:4px;gap:8px}
+  .chapter-programs .chapter-lead{display:flex;flex-direction:column;gap:clamp(16px,4.67vw,20px);margin-top:clamp(19px,5.37vw,23px);line-height:1.5;text-align:left}
   .chapter-programs .program-lead-group{display:flex;flex-direction:column;gap:8px;min-width:0}
   .chapter-programs .program-lead-group:last-child{margin-left:0}
   .chapter-programs .chapter-lead br,.chapter-programs .program-prefix{display:none}
   .chapter-programs .chapter-lead .program-name{order:0;display:block;font-size:clamp(28px,7.7vw,34px);line-height:1.25;letter-spacing:0;white-space:nowrap}
-  .chapter-programs .program-context{order:1;font-size:17px;font-weight:600;line-height:1.5;white-space:nowrap;color:var(--ink)}
-  .chapter-programs .chapter-detail{margin-top:18px;line-height:1.55}
-  .chapter-programs .chapter-action{margin-top:20px;line-height:1.5}
+  .chapter-programs .program-context{order:1;font-size:clamp(15px,4vw,17px);font-weight:600;line-height:1.5;white-space:nowrap;color:var(--ink)}
+  .chapter-programs .chapter-detail{font-size:clamp(14px,4.1vw,17px);margin-top:clamp(15px,4.2vw,18px);line-height:1.55}
+  .chapter-programs .chapter-action{font-size:clamp(14px,4.1vw,17px);gap:10px;margin-top:clamp(16px,4.67vw,20px);line-height:1.5;white-space:nowrap}
+  .chapter-programs .chapter-action .icon{width:28px;height:28px}
   main > .chapter-programs .chapter-visual.scene-art{width:calc(100% + 50px);max-width:none;align-items:center}
   main > .chapter-programs .scene-image{max-height:100%}
   main > .chapter-products .scene-image{max-width:96%}
