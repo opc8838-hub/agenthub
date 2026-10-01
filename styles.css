@@ -4043,3 +4043,104 @@ html.is-wheel-paging{scroll-snap-type:none!important;scroll-behavior:auto!import
   .mobile-floating-nav button:focus-visible,
   .mobile-contact-link:focus-visible{outline:2px solid #315ddd;outline-offset:2px;border-radius:12px}
 }
+#plans.modal-layer{padding:clamp(12px,3.8vh,46px);background:rgba(31,37,52,.30);backdrop-filter:blur(8px)}
+#plans .plans-modal{position:relative;display:flex;flex-direction:column;width:min(1252px,100%);height:min(992px,calc(100dvh - clamp(24px,7.6vh,92px)));max-height:none;overflow:hidden;border:1px solid #edf0f6;border-radius:20px;background:#fcfdff;background-image:none;box-shadow:0 32px 90px rgba(31,40,63,.16);padding:45px 38px 20px}
+#plans .close{position:absolute;top:19px;right:23px;z-index:5;width:48px;height:48px}
+.plans-heading{flex:none;padding:0 6px 24px}
+.plans-heading h2{position:relative;width:max-content;margin:0 0 15px;font-size:48px;font-weight:800;line-height:1.25;letter-spacing:-.03em;color:#0b1020}
+.plans-heading h2::after,.plans-card h3::after{position:absolute;left:0;bottom:-8px;width:43px;height:5px;border-radius:8px;background:#1468f4;content:""}
+.plans-heading p{margin:0;color:#464d5c;font-size:21px;line-height:1.55;letter-spacing:.015em}
+.plans-cards{position:relative;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:19px;flex:1;min-height:0;margin:0 0 18px}
+.plans-card{display:flex;flex-direction:column;min-width:0;min-height:0;height:min(620px,100%);padding:31px 22px 19px;border:1px solid #e3eaf5;border-radius:16px;background:linear-gradient(145deg,#f6f9ff,#f8fbff 80%);overflow:hidden}
+.plans-card-top{display:grid;grid-template-columns:minmax(0,1fr) 50%;gap:14px;flex:none;height:226px}
+.plans-card-copy{min-width:0}
+.plans-card h3{position:relative;width:max-content;max-width:100%;margin:0 0 25px;font-size:30px;font-weight:800;line-height:1.35;color:#0c1323;white-space:nowrap}
+.plans-card h3::after{width:35px;height:5px;bottom:-7px}
+.plans-card-copy p{margin:0;color:#4a5362;font-size:16.5px;line-height:1.78;letter-spacing:.005em}
+.plans-photo{height:226px;min-width:0;border-radius:11px;background-image:url('assets/plans-layout-reference.jpg');background-repeat:no-repeat;background-size:auto 487.6%;box-shadow:0 1px 4px rgba(30,50,70,.08)}
+.plans-photo-factory{background-position:36.25% 29.9%}
+.plans-photo-hackathon{background-position:86.2% 29.9%}
+.plans-tags{display:flex;justify-content:space-between;gap:10px;flex:none;margin:15px 0 20px}
+.plans-tag{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-width:0;padding:8px 12px;border-radius:999px;font-size:16px;font-weight:650;line-height:1.2;white-space:nowrap}
+.plans-tag b{font-size:24px;font-weight:750;line-height:1}
+.plans-tag-blue{color:#1266ca;background:#e3efff}.plans-tag-purple{color:#8b48cb;background:#f0e9ff}.plans-tag-green{color:#169671;background:#dcf8ee}
+.plans-calendar{flex:1;min-height:0;padding:16px 20px 10px;border-radius:13px;background:#fff;box-shadow:0 1px 6px rgba(60,80,110,.03)}
+.plans-calendar-head{display:grid;grid-template-columns:60px repeat(7,1fr);align-items:center;gap:2px;color:#5b6473;font-size:15px;text-align:center}
+.plans-calendar-head strong{grid-column:1;font-size:23px;color:#101522;text-align:left;white-space:nowrap}
+.plans-calendar-days{display:grid;grid-template-columns:repeat(7,1fr);grid-template-rows:repeat(5,minmax(30px,1fr));height:calc(100% - 35px);margin:8px 0 0 62px;align-items:center;justify-items:center;color:#323947;font-size:15px;font-weight:450}
+.plans-calendar-days span{display:grid;place-items:center;width:37px;height:37px;border-radius:50%}
+.plans-calendar-days span:first-child{grid-column:3}
+.plans-date-active{background:#1474ef;color:white;box-shadow:0 3px 8px #1764e63b}.plans-calendar-days .plans-date-soft{background:#e8f1ff;color:#1769d0}
+.plans-agent{position:absolute;z-index:2;left:50%;bottom:-67px;width:240px;height:auto;transform:translateX(-50%);filter:contrast(1.26) brightness(1.1);mix-blend-mode:multiply;pointer-events:none}
+.plans-footer{display:flex;align-items:center;justify-content:space-between;gap:16px;flex:none;min-height:74px;padding:15px 0 0;border-top:1px solid #e6eaf0}
+.plans-footer p{margin:0;color:#5b6372;font-size:17px;line-height:1.45}
+.plans-contact{flex:none;min-width:170px;min-height:55px;padding:9px 25px;border:0;border-radius:999px;color:white;background:#0869f9;box-shadow:0 9px 18px #1474ef35;font-size:18px;font-weight:700}
+.plans-contact:hover{background:#075fe0}.plans-contact:focus-visible{outline:3px solid #8abaff;outline-offset:3px}
+@media(max-height:950px) and (min-width:701px){#plans .plans-modal{padding-top:26px}.plans-heading{padding-bottom:14px}.plans-heading h2{font-size:40px;margin-bottom:10px}.plans-heading p{font-size:18px}.plans-card{height:min(620px,100%);padding-top:20px}.plans-card-top{height:clamp(145px,24vh,210px)}.plans-photo{height:100%}.plans-card h3{font-size:25px;margin-bottom:16px}.plans-card-copy p{font-size:14px;line-height:1.55}.plans-tags{margin:10px 0 12px}.plans-tag{font-size:13px;padding:6px 8px}.plans-tag b{font-size:18px}.plans-calendar{padding-top:9px}.plans-calendar-days{grid-template-rows:repeat(5,minmax(24px,1fr))}.plans-calendar-days span{width:30px;height:30px}.plans-agent{width:200px;bottom:-40px}.plans-footer{min-height:64px}}
+@media(max-width:700px){#plans.modal-layer{padding:6px}#plans .plans-modal{width:100%;height:calc(100dvh - 12px);padding:15px 11px 10px;border-radius:18px}#plans .close{top:8px;right:8px;width:35px;height:35px}.plans-heading{padding:0 2px 9px}.plans-heading h2{font-size:27px;margin-bottom:10px}.plans-heading h2::after{width:27px;height:3px;bottom:-5px}.plans-heading p{font-size:11px;line-height:1.4;padding-right:22px}.plans-cards{grid-template-columns:1fr;grid-template-rows:repeat(2,minmax(0,1fr));gap:6px;margin-bottom:5px}.plans-card{padding:9px 10px 8px;border-radius:10px}.plans-card-top{height:38%;grid-template-columns:minmax(0,1fr) 38%;gap:7px}.plans-card h3{font-size:17px;margin-bottom:9px}.plans-card h3::after{width:22px;height:3px;bottom:-4px}.plans-card-copy p{font-size:10px;line-height:1.3}.plans-photo{height:100%;border-radius:6px}.plans-tags{gap:3px;margin:5px 0}.plans-tag{gap:2px;padding:3px 5px;font-size:9px}.plans-tag b{font-size:13px}.plans-calendar{padding:3px 7px 2px;border-radius:7px}.plans-calendar-head{font-size:8px}.plans-calendar-head strong{font-size:12px}.plans-calendar-days{grid-template-rows:repeat(5,minmax(11px,1fr));height:calc(100% - 18px);margin-top:2px;font-size:8px}.plans-calendar-days span{width:15px;height:15px}.plans-agent{width:25%;bottom:-22px}.plans-footer{min-height:37px;padding-top:4px;gap:6px}.plans-footer p{font-size:9px;line-height:1.25}.plans-contact{min-width:73px;min-height:28px;padding:5px 7px;font-size:10px}}
+@media(max-width:700px){.plans-calendar-head{grid-template-columns:22px repeat(7,1fr)}.plans-calendar-days{margin-left:24px}.plans-heading p{padding-right:94px}.plans-agent{display:block;top:-80px;right:44px;bottom:auto;left:auto;width:58px;transform:none}}
+
+/* Mobile slides: keep readable type in a dedicated lane beside the fixed rail. */
+@media(max-width:600px){
+  main > .chapter > .chapter-inner,
+  .chapter-community .chapter-inner,
+  .chapter:not(.chapter-community) .chapter-inner,
+  .chapter:not(.chapter-community) .chapter-inner.visual-first{
+    display:flex;flex-direction:column;align-items:stretch;
+    width:100%;height:100%;min-height:0;
+    padding:22px max(86px,calc(env(safe-area-inset-right) + 86px)) 12px 22px;
+    gap:12px;translate:none;transform:none;
+  }
+  main > .chapter .chapter-copy{flex:none;width:100%;max-width:none;min-width:0;translate:none}
+  .chapter-title-wrap{max-width:100%}
+  .chapter-title-wrap.spark-left{margin-left:0}
+  .chapter .chapter-title{white-space:normal;overflow-wrap:normal;letter-spacing:0}
+  .chapter .title-spark{width:34px;height:32px;top:-16px}
+  .chapter .spark-left .title-spark{left:-13px}
+  .chapter .spark-right .title-spark{right:-18px}
+  .chapter .chapter-lead{margin-top:14px;line-height:1.55;white-space:normal}
+  .chapter .chapter-detail{margin-top:12px;line-height:1.55;white-space:normal}
+  .chapter .chapter-action{max-width:100%;gap:14px;margin-top:16px;padding:0;white-space:normal;text-align:left;line-height:1.5;align-items:center}
+  .chapter .chapter-action .action-label{min-width:0;flex:0 1 auto;overflow-wrap:anywhere;padding-bottom:7px}
+  .chapter .chapter-action .icon{flex:none;width:32px;height:32px}
+  main > .chapter .chapter-visual.scene-art{display:flex;flex:1;min-height:0;width:100%;max-width:100%;align-items:center;justify-content:center;translate:none;overflow:hidden}
+  main > .chapter .scene-image,
+  main > .chapter .scene-wide .scene-image{width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;--scene-shift:0%!important;--scene-lift:0px!important}
+  .chapter-community .hero-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 0;margin-top:18px}
+  .chapter-community .hero-facts>div{min-width:0;flex:none;padding:0 12px;gap:1px}
+  .chapter-community .hero-facts>div:first-child{padding-left:0}
+  .chapter-community .hero-facts>div:nth-child(2){border-right:0}
+  .chapter-community .hero-facts>div:last-child{grid-column:1/-1;padding:0;display:flex;flex-direction:row;align-items:center;gap:10px}
+  .chapter-community .hero-facts .words{line-height:1.4;white-space:nowrap}
+  .chapter-community .hero-facts>div:last-child>span{white-space:normal}
+  .chapter-community .community-join-cta{margin-top:16px}
+  .chapter-community .chapter-lead .blue-text{display:inline-block;white-space:nowrap}
+  .chapter-social .community-tags{margin-top:15px;gap:7px}
+  .chapter-social .community-tag-row:first-child{display:grid;grid-template-columns:max-content max-content;gap:7px}
+  .chapter-social .community-tags span{white-space:nowrap}
+  .chapter-programs .chapter-action .action-label{max-width:calc(100% - 46px)}
+  .chapter-programs .program-action-group{display:inline-block;white-space:nowrap}
+  .chapter-leader .chapter-title{font-size:36px;line-height:1.18;white-space:normal}
+  .chapter-leader .leader-heading-row{display:block;white-space:nowrap}
+  .chapter-leader .leader-intro-phrase{display:inline-block;white-space:nowrap}
+  .chapter-leader .leader-name{font-size:31px;margin-top:13px}
+  .chapter-leader .chapter-lead{font-size:22px;margin-top:12px}
+  .chapter-leader .chapter-detail{font-size:18.7px;margin-top:12px}
+  .chapter-leader .chapter-action{font-size:18.7px;margin-top:14px}
+  .chapter-leader .chapter-action .icon,.chapter-products .chapter-action .icon{width:35px;height:35px}
+  .chapter-products .chapter-title{font-size:44px;line-height:1.18}
+  .chapter-products .product-heading-row{display:block}
+  .chapter-products .chapter-lead{font-size:22px;margin-top:24px}
+  .chapter-products .service-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px 12px;margin-top:16px}
+  .chapter-products .service-grid span{min-height:46px;padding:0;border:0;gap:8px;font-size:16.5px;white-space:normal;line-height:1.3}
+  .chapter-products .service-grid .icon{flex:none;width:30px;height:30px}
+  .chapter-products .chapter-action{font-size:18.7px;margin-top:16px}
+  .chapter-products .product-title-underline{bottom:-19px;height:22px}
+  .chapter-programs .chapter-title-wrap,
+  .chapter-leader .chapter-title-wrap{display:block;width:100%;text-align:center}
+  .chapter-programs .chapter-lead,
+  .chapter-leader .leader-name,
+  .chapter-leader .chapter-lead{text-align:center}
+  .chapter-programs .spark-left .title-spark{left:calc(50% - 100px)}
+  .chapter-leader .spark-right .title-spark{right:calc(50% - 95px)}
+}

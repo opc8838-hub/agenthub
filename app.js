@@ -14,6 +14,7 @@
     'chapter-consulting': '咨询服务'
   };
   let active = null;
+  let modalScrollTop = null;
   let opener = null;
   let mobileNavOpen = false;
   const focusable = 'button:not([disabled]), input, textarea, select, a[href], [tabindex="0"]';
@@ -88,13 +89,18 @@
     active = null;
     page.inert = false;
     document.body.classList.remove('modal-open');
+    if (modalScrollTop !== null) window.scrollTo({ top: modalScrollTop, behavior: 'instant' });
+    modalScrollTop = null;
     if (opener?.isConnected) opener.focus({ preventScroll: true });
   }
 
   function open(id, trigger) {
     const next = dialogs.find(dialog => dialog.id === id);
     if (!next) return;
-    if (!active) opener = trigger;
+    if (!active) {
+      opener = trigger;
+      modalScrollTop = window.scrollY;
+    }
     if (active) {
       stopProductVideos(active);
       active.hidden = true;
@@ -113,6 +119,12 @@
     if (document.hidden) stopProductVideos(active, true);
     else startProductVideos(active);
   });
+
+  window.addEventListener('scroll', () => {
+    if (active && modalScrollTop !== null && Math.abs(window.scrollY - modalScrollTop) > 1) {
+      window.scrollTo({ top: modalScrollTop, behavior: 'instant' });
+    }
+  }, { passive: true });
 
   document.addEventListener('click', event => {
     const mobileToggle = event.target.closest('.mobile-nav-toggle');
@@ -206,9 +218,9 @@
         inner.style.removeProperty('--mobile-slide-scale');
         return;
       }
-      const available = chapter.clientHeight - 4;
-      const natural = inner.scrollHeight;
-      inner.style.setProperty('--mobile-slide-scale', String(Math.min(1, available / natural)));
+      // Mobile layouts reserve a rail gutter and size only the illustration.
+      // Scaling the whole chapter made type smaller and hid content under the rail.
+      inner.style.removeProperty('--mobile-slide-scale');
     });
   }
   requestAnimationFrame(fitMobileChapters);
