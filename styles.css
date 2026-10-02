@@ -4165,4 +4165,16 @@ html.is-wheel-paging{scroll-snap-type:none!important;scroll-behavior:auto!import
   main > .chapter-programs .chapter-visual.scene-art{width:calc(100% + 50px);max-width:none;align-items:center}
   main > .chapter-programs .scene-image{max-height:100%}
   main > .chapter-products .scene-image{max-width:96%}
+  .chapter-consulting .chapter-detail{font-size:19px;line-height:1.55;margin-top:16px}
+  .chapter-consulting .consulting-phrase{display:inline-block;white-space:nowrap}
+  .chapter-consulting .chapter-action{font-size:20px;margin-top:19px}
+  main > .chapter-consulting .chapter-visual.scene-art{align-items:flex-start;padding-top:20px}
+  /* Enlarge the drawing inside its transparent margins, keeping the visible art in the navigation gutter. */
+  main > .chapter-consulting .scene-wide .scene-image{width:120%;max-width:120%;flex:none}
+}
+
+@media(max-width:820px){
+  /* The illustration participates in layout so the service cards cannot cover it. */
+  #consulting .consulting-service-art{height:auto;margin:16px 0 20px;overflow:visible}
+  #consulting .consulting-service-art img{position:relative;display:block;left:auto;top:auto;width:100%;max-width:100%;height:auto;transform:none}
 }
